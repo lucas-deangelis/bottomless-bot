@@ -1,0 +1,11 @@
+{
+    "name": "eternal-symphogear-rewatch",
+    "version": "1.0.0",
+    "description": "Bot to keep track of which episode to watch",
+    "main": "bot.js",
+    "author": "Lucas De Angelis",
+    "dependencies": {
+        "discord.io": "https://github.com/woor/discord.io/tarball/gateway_v6",
+        "winston": "^3.2.1"
+    }
+}
