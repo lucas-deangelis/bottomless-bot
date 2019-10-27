@@ -5,10 +5,14 @@
     "main": "bot.js",
     "author": "Lucas De Angelis",
     "scripts": {
-        "start": "node bot.js"
+        "start": "node bot.js",
+        "test": "jest"
     },
     "dependencies": {
         "discord.js": "^11.5.1",
         "dotenv": "^8.2.0"
+    },
+    "devDependencies": {
+        "jest": "^24.9.0"
     }
 }
