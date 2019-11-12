@@ -23,9 +23,9 @@ client.on("message", msg => {
         msg.reply(episode);
     }
     if (msg.content.includes("listCommands")) {
-        msg.reply(`whichepisode -> today's episode\n
-                    whichtomorrow -> tomorrow 's episode\n
-                    help -> list of commands`);
+        msg.reply(
+            `\nwhichepisode -> today's episode\nwhichtomorrow -> tomorrow 's episode\nhelp -> list of commands`
+        );
     }
 });
 
