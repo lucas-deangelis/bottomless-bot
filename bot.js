@@ -24,7 +24,7 @@ client.on("message", msg => {
     }
     if (msg.content.includes("&listCommands")) {
         msg.reply(
-            `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\listCommands -> list of commands`
+            `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nlistCommands -> list of commands`
         );
     }
 });
