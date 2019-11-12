@@ -1,31 +1,24 @@
-require('dotenv').config();
-const episodes = require('./episodes');
-const { diffDays } = require('./diffDays');
+require("dotenv").config();
+const { episodes, beginning } = require("./variables");
+const { diffDays } = require("./lib");
 
-
-
-const beginning = new Date('October 1, 2019 15:17:00');
-
-
-const Discord = require('discord.js');
+const Discord = require("discord.js");
 const client = new Discord.Client();
 
 token = process.env.BOT_TOKEN;
 
-client.on('ready', () => {
+client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-client.on('message', msg => {
-    if (msg.content.includes('whichepisode')) {
-        let dateToday = Date.now();
-        let nbEpisode = diffDays(beginning, dateToday);
+client.on("message", msg => {
+    if (msg.content.includes("whichepisode")) {
+        let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode];
         msg.reply(episode);
     }
-    if (msg.content.includes('whichtomorrow')) {
-        let dateToday = Date.now();
-        let nbEpisode = diffDays(beginning, dateToday);
+    if (msg.content.includes("whichtomorrow")) {
+        let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode + 1];
         msg.reply(episode);
     }
