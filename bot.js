@@ -12,19 +12,19 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-    if (msg.content.includes("episodeToday")) {
+    if (msg.content.includes("&episodeToday")) {
         let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode];
         msg.reply(episode);
     }
-    if (msg.content.includes("episodeTomorrow")) {
+    if (msg.content.includes("&episodeTomorrow")) {
         let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode + 1];
         msg.reply(episode);
     }
-    if (msg.content.includes("listCommands")) {
+    if (msg.content.includes("&listCommands")) {
         msg.reply(
-            `\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nhelp -> list of commands`
+            `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\listCommands -> list of commands`
         );
     }
 });
