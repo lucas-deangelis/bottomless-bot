@@ -12,19 +12,19 @@ client.on("ready", () => {
 });
 
 client.on("message", msg => {
-    if (msg.content.includes("whichEpisode")) {
+    if (msg.content.includes("episodeToday")) {
         let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode];
         msg.reply(episode);
     }
-    if (msg.content.includes("whichTomorrow")) {
+    if (msg.content.includes("episodeTomorrow")) {
         let nbEpisode = diffDays(beginning, Date.now());
         let episode = episodes[nbEpisode + 1];
         msg.reply(episode);
     }
     if (msg.content.includes("listCommands")) {
         msg.reply(
-            `\nwhichepisode -> today's episode\nwhichtomorrow -> tomorrow 's episode\nhelp -> list of commands`
+            `\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nhelp -> list of commands`
         );
     }
 });
