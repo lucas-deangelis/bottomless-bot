@@ -8,6 +8,11 @@ const diffDays = (firstDate, secondDate) => {
     return roundDays;
 };
 
+const getAlbum = people => {
+    // TODO
+};
+
 module.exports = {
-    diffDays
+    diffDays,
+    getAlbum
 };
