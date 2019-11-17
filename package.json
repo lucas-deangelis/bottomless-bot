@@ -1,7 +1,7 @@
 {
-    "name": "eternal-symphogear-rewatch",
-    "version": "1.0.0",
-    "description": "Bot to keep track of which episode to watch",
+    "name": "bottomless-pit-bot",
+    "version": "1.1.0",
+    "description": "Bot used to assist some activities on our discord server",
     "main": "bot.js",
     "author": "Lucas De Angelis",
     "scripts": {
