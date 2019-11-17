@@ -4,11 +4,18 @@ const {
     clearUsers,
     incrementUserAlbumCount,
     createAlbumForUser,
-    markAlbumAsPassed
+    markAlbumAsPassed,
+    getUsersAndAlbums
 } = require("./queries");
+
+const db = require("./db");
 
 beforeEach(async() => {
     await clearUsers();
+});
+
+afterAll(async() => {
+    await db.close();
 });
 
 test("difference between two equal dates is O", async done => {
@@ -60,8 +67,8 @@ test("getAlbum send all the albums", async done => {
 
 test("createUser creates a user", async done => {
     const res = await createUser("toto");
-    expect(res.name).toBe("toto");
-    expect(res.countalbum).toBe(0);
+    expect(res[0].name).toBe("toto");
+    expect(res[0].countalbum).toBe(0);
 
     done();
 });
@@ -93,6 +100,28 @@ test("markAlbumAsPassed works", async done => {
     const res = await markAlbumAsPassed("albumToto");
 
     expect(res[0].passed).toBe(true);
+
+    done();
+});
+
+test("getUsersAndAlbums works", async done => {
+    await createUser("toto");
+    await createAlbumForUser("albumToto1", "toto");
+    await createAlbumForUser("albumToto2", "toto");
+
+    await createUser("tata");
+    await createAlbumForUser("albumTata1", "tata");
+    await createAlbumForUser("albumTata2", "tata");
+
+    const res = await getUsersAndAlbums();
+
+    expect(res[0].name).toBe("toto");
+    expect(res[0].albums).toContain("albumToto2");
+    expect(res[0].albums).toContain("albumToto1");
+
+    expect(res[1].name).toBe("tata");
+    expect(res[1].albums).toContain("albumTata2");
+    expect(res[1].albums).toContain("albumTata1");
 
     done();
 });

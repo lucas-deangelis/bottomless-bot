@@ -1,8 +1,34 @@
 const db = require("./db");
 
-// TODO: READ all users and their albums
-function getUsersAndAlbums() {
-    return usersAndAlbums;
+async function getUsersAndAlbums() {
+    const text =
+        "SELECT * FROM users as u FULL OUTER JOIN albums as a ON u.name = a.userName";
+
+    try {
+        const res = await db.query(text);
+        const rows = res.rows;
+
+        let users = [];
+        let usersDone = [];
+        for (let el of rows) {
+            if (!usersDone.includes(el.username)) {
+                users.push({ name: el.username, albums: [] });
+                usersDone.push(el.username);
+            }
+        }
+
+        for (let el of rows) {
+            for (let user of users) {
+                if (el.username == user.name) {
+                    user.albums.push(el.name);
+                }
+            }
+        }
+
+        return users;
+    } catch (err) {
+        console.log(err);
+    }
 }
 
 async function createUser(name) {
@@ -10,7 +36,7 @@ async function createUser(name) {
         "INSERT INTO users (name, countAlbum) VALUES ($1, 0) RETURNING *";
     try {
         const res = await db.query(text, [name]);
-        return res.rows[0];
+        return res.rows;
     } catch (err) {
         console.log(err);
     }
@@ -76,5 +102,6 @@ module.exports = {
     clearUsers,
     incrementUserAlbumCount,
     createAlbumForUser,
-    markAlbumAsPassed
+    markAlbumAsPassed,
+    getUsersAndAlbums
 };

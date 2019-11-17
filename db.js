@@ -11,5 +11,8 @@ const pool = new Pool({
 module.exports = {
     query: async(text, params, callback) => {
         return await pool.query(text, params, callback);
+    },
+    close: async() => {
+        await pool.end();
     }
 };

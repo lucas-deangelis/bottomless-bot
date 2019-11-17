@@ -6,7 +6,7 @@
     "author": "Lucas De Angelis",
     "scripts": {
         "start": "node bot.js",
-        "test": "jest"
+        "test": "jest --detectOpenHandles"
     },
     "dependencies": {
         "discord.js": "^11.5.1",
