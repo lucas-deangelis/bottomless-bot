@@ -1,5 +1,7 @@
 const db = require("./db");
-
+/**
+ * @return {array} an array of objects which represents users. These objects have a name property, which is the user name, and an albums property, which is an array of albums names.
+ */
 async function getUsersAndAlbums() {
     const text =
         "SELECT * FROM users as u FULL OUTER JOIN albums as a ON u.name = a.userName";
@@ -10,9 +12,10 @@ async function getUsersAndAlbums() {
 
         let users = [];
         let usersDone = [];
+
         for (let el of rows) {
             if (!usersDone.includes(el.username)) {
-                users.push({ name: el.username, albums: [] });
+                users.push({ name: el.username, count: el.countalbum, albums: [] });
                 usersDone.push(el.username);
             }
         }
@@ -30,7 +33,10 @@ async function getUsersAndAlbums() {
         console.log(err);
     }
 }
-
+/**
+ *
+ * @param {string} name - The name of the user to be created
+ */
 async function createUser(name) {
     const text =
         "INSERT INTO users (name, countAlbum) VALUES ($1, 0) RETURNING *";
@@ -41,7 +47,9 @@ async function createUser(name) {
         console.log(err);
     }
 }
-
+/**
+ * Clears the database. Used for tests only
+ */
 async function clearUsers() {
     const text = "TRUNCATE TABLE users CASCADE";
     try {
@@ -51,6 +59,10 @@ async function clearUsers() {
     }
 }
 
+/**
+ *
+ * @param {string} name - The name of the user which will have his album number count incremented
+ */
 async function incrementUserAlbumCount(name) {
     const getUser = "SELECT countAlbum FROM users WHERE users.name = $1";
     const updateUser =
@@ -71,6 +83,11 @@ async function incrementUserAlbumCount(name) {
     }
 }
 
+/**
+ * Creates an album and associate it with an user
+ * @param {string} albumName
+ * @param {string} userName
+ */
 async function createAlbumForUser(albumName, userName) {
     const createAlbum =
         "INSERT INTO albums (name, userName, passed) VALUES ($1, $2, false) RETURNING *";
@@ -84,6 +101,10 @@ async function createAlbumForUser(albumName, userName) {
     }
 }
 
+/**
+ *
+ * @param {string} albumName
+ */
 async function markAlbumAsPassed(albumName) {
     const updateAlbum =
         "UPDATE albums SET passed = true WHERE name = $1 RETURNING *";
