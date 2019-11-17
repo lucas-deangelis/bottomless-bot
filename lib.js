@@ -36,19 +36,25 @@ const getAlbum = people => {
 };
 
 const submitAlbum = (author, album) => {
-    users = getUsersAndAlbums();
-    const userExists = users.some(el => el.username === author);
+    const users = getUsersAndAlbums();
+    const userDoesNotExist = users.every(el => el.username !== author);
 
-    if (userExists === false) {
+    if (userDoesNotExist) {
         createUser(author);
-        createAlbumForUser(album, author);
-    } else {
-        createAlbumForUser(album, author);
-    }
-}
+    };
+
+    createAlbumForUser(album, author);
+};
+
+const addAlbum = (msg) => {
+    let album = msg.content.replace('&addAlbum ', '');
+    let author = msg.author;
+
+    submitAlbum(author, album);
+};
 
 module.exports = {
     diffDays,
     getAlbum,
-    submitAlbum
+    addAlbum,
 };
