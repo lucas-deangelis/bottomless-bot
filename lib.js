@@ -2,6 +2,17 @@
 
 const { milliSecPerDay } = require("./variables");
 
+const {
+    createUser,
+    clearUsers,
+    incrementUserAlbumCount,
+    createAlbumForUser,
+    markAlbumAsPassed,
+    getUsersAndAlbums
+} = require("./queries");
+
+const db = require("./db");
+
 const diffDays = (firstDate, secondDate) => {
     let diff = firstDate - secondDate;
     let days = diff / milliSecPerDay;
@@ -24,7 +35,20 @@ const getAlbum = people => {
     return readyPeople[choice].album;
 };
 
+const submitAlbum = (author, album) => {
+    users = getUsersAndAlbums();
+    const userExists = users.some(el => el.username === author);
+
+    if (userExists === false) {
+        createUser(author);
+        createAlbumForUser(album, author);
+    } else {
+        createAlbumForUser(album, author);
+    }
+}
+
 module.exports = {
     diffDays,
-    getAlbum
+    getAlbum,
+    submitAlbum
 };
