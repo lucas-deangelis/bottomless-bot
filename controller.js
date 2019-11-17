@@ -1,5 +1,5 @@
 const { episodes, beginning } = require("./variables");
-const { diffDays } = require("./lib");
+const { diffDays, submitAlbum } = require("./lib");
 
 function controller(msg) {
     if (msg.content.includes("&episodeToday")) {
@@ -16,6 +16,12 @@ function controller(msg) {
         msg.reply(
             `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nlistCommands -> list of commands`
         );
+    }
+    if (msg.content.includes("&addAlbum")) {
+        let album = msg.content.replace('&addAlbum ', '');
+        let author = msg.author;
+        submitAlbum(author, album);
+        msg.reply(`${album} has been added to your queue.`);
     }
 }
 
