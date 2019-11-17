@@ -1,6 +1,6 @@
 "use strict";
 
-const { diffDays, getAlbum } = require("./lib");
+const { diffDays, getAlbum, addAlbum } = require("./lib");
 const {
     createUser,
     clearUsers,
@@ -128,6 +128,23 @@ test("getUsersAndAlbums works", async done => {
     expect(res[1].albums).toContain("albumTata2");
     expect(res[1].albums).toContain("albumTata1");
     expect(res[1].count).toBe(1);
+
+    done();
+});
+
+test('submitAlbum works', async done => {
+
+    const msg = {
+        content: '&submitAlbum Toto - Africa',
+        author: 'Hiki'
+    };
+
+    addAlbum(msg);
+
+    const res = await getUsersAndAlbums();
+
+    expect(res[0].name).toBe('Hiki');
+    expect(res[0].albums).toContain('Toto - Africa');
 
     done();
 });
