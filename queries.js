@@ -1,3 +1,5 @@
+"use strict";
+
 const db = require("./db");
 /**
  * @return {array} an array of objects which represents users. These objects have a name property, which is the user name, and an albums property, which is an array of albums names.

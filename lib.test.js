@@ -1,3 +1,5 @@
+"use strict";
+
 const { diffDays, getAlbum } = require("./lib");
 const {
     createUser,

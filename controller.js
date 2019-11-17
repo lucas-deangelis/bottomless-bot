@@ -1,3 +1,5 @@
+"use strict";
+
 const { episodes, beginning } = require("./variables");
 const { diffDays } = require("./lib");
 
