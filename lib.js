@@ -1,3 +1,5 @@
+"use strict";
+
 const { milliSecPerDay } = require("./variables");
 
 const diffDays = (firstDate, secondDate) => {
