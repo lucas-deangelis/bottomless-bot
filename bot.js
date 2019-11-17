@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { controller } = require("controller");
+const { controller } = require("./controller");
 
 const Discord = require("discord.js");
 const client = new Discord.Client();
