@@ -10,13 +10,14 @@ const diffDays = (firstDate, secondDate) => {
 
 const getAlbum = people => {
     let readyPeople = [];
-    
+
     for (let el of people) {
         if (el.ready) {
             readyPeople.push(el);
         }
     }
-    choice = Math.floor(Math.random() * readyPeople.length);
+
+    const choice = Math.floor(Math.random() * readyPeople.length);
     readyPeople[choice].ready = false;
     return readyPeople[choice].album;
 };
