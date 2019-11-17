@@ -1,4 +1,4 @@
-const { diffDays, getAlbum } = require("./lib");
+const { diffDays, getAlbum, submitAlbum } = require("./lib");
 const {
     createUser,
     clearUsers,
@@ -122,6 +122,26 @@ test("getUsersAndAlbums works", async done => {
     expect(res[1].name).toBe("tata");
     expect(res[1].albums).toContain("albumTata2");
     expect(res[1].albums).toContain("albumTata1");
+
+    done();
+});
+
+test('submitAlbum works', async done => {
+
+    const msg = {
+        content: '&&submitAlbum Toto - Africa',
+        author: 'Hiki'
+    };
+
+    let album = msg.content.replace('&addAlbum ', '');
+    let author = msg.author;
+
+    submitAlbum(author, album);
+
+    const res = await getUsersAndAlbums();
+
+    expect(res[0].name).toBe('Hiki');
+    expect(res[0].albums).toContain('Toto - Africa');
 
     done();
 });
