@@ -47,8 +47,8 @@ const submitAlbum = (author, album) => {
 };
 
 const addAlbum = (msg) => {
-    let album = msg.content.replace('&addAlbum ', '');
-    let author = msg.author;
+    const album = msg.content.replace('&addAlbum ', '');
+    const author = msg.author;
 
     submitAlbum(author, album);
 };
