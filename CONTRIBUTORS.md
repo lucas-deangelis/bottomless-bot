@@ -1,7 +1,7 @@
 ### Owner
 
-Lucas DE ANGELIS https://github.com/l-deangelis
+Lucas DE ANGELIS [github](https://github.com/l-deangelis)
 
 ### Contributors
 
-Alexandre VIGLIONE https://github.com/alex-viglione
+Alexandre VIGLIONE [github](https://github.com/alex-viglione)
