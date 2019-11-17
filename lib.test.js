@@ -1,3 +1,5 @@
+"use strict";
+
 const { diffDays, getAlbum, submitAlbum } = require("./lib");
 const {
     createUser,
@@ -113,15 +115,19 @@ test("getUsersAndAlbums works", async done => {
     await createAlbumForUser("albumTata1", "tata");
     await createAlbumForUser("albumTata2", "tata");
 
+    await incrementUserAlbumCount("tata");
+
     const res = await getUsersAndAlbums();
 
     expect(res[0].name).toBe("toto");
     expect(res[0].albums).toContain("albumToto2");
     expect(res[0].albums).toContain("albumToto1");
+    expect(res[0].count).toBe(0);
 
     expect(res[1].name).toBe("tata");
     expect(res[1].albums).toContain("albumTata2");
     expect(res[1].albums).toContain("albumTata1");
+    expect(res[1].count).toBe(1);
 
     done();
 });
