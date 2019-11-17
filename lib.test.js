@@ -1,6 +1,6 @@
 "use strict";
 
-const { diffDays, getAlbum, submitAlbum } = require("./lib");
+const { diffDays, getAlbum, addAlbum } = require("./lib");
 const {
     createUser,
     clearUsers,
@@ -135,14 +135,11 @@ test("getUsersAndAlbums works", async done => {
 test('submitAlbum works', async done => {
 
     const msg = {
-        content: '&&submitAlbum Toto - Africa',
+        content: '&submitAlbum Toto - Africa',
         author: 'Hiki'
     };
 
-    let album = msg.content.replace('&addAlbum ', '');
-    let author = msg.author;
-
-    submitAlbum(author, album);
+    addAlbum(msg);
 
     const res = await getUsersAndAlbums();
 

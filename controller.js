@@ -20,9 +20,7 @@ function controller(msg) {
         );
     }
     if (msg.content.includes("&addAlbum")) {
-        let album = msg.content.replace('&addAlbum ', '');
-        let author = msg.author;
-        submitAlbum(author, album);
+        addAlbum(msg);
         msg.reply(`${album} has been added to your queue.`);
     }
 }
