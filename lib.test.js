@@ -1,6 +1,7 @@
 "use strict";
 
 const { diffDays, getAlbum, addAlbum } = require("./lib");
+const { episodes } = require("./variables")
 
 
 test("difference between two equal dates is O", async done => {
@@ -64,6 +65,28 @@ test('submitAlbum works', async done => {
 
     expect(res[0].name).toBe('Hiki');
     expect(res[0].albums).toContain('Toto - Africa');
+
+    done();
+});
+
+test('episodeDate works', async done => {
+    const dateTest = new Date("2019-11-18");
+    const beginningTest = new Date("2019-10-01");
+    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+
+    expect(episodeTest).toBe('AXZ E2');
+
+    done();
+});
+
+test('episodeDate works', async done => {
+    const dateTest = new Date("2019-12-31");
+    const beginningTest = new Date("2019-10-01");
+    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+
+    expect(episodeTest).toBe('S1 E9');
 
     done();
 });
