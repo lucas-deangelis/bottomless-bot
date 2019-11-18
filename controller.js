@@ -1,7 +1,7 @@
 "use strict";
 
 const { episodes, beginning } = require("./variables");
-const { diffDays, submitAlbum } = require("./lib");
+const { diffDays, submitAlbum, getEpisodeDate } = require("./lib");
 
 function controller(msg) {
     if (msg.content.includes("&episodeToday")) {
@@ -23,6 +23,13 @@ function controller(msg) {
         addAlbum(msg);
         msg.reply(`${album} has been added to your queue.`);
     }
+    /**
+     * 
+    if (msg.content.includes("&episodeDate")) {
+        getEpisodeDate(msg);
+        msg.reply(`The episode for ${inputDate} will be : ${episode}`);
+    }
+    */
 }
 
 module.exports = {
