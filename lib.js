@@ -11,6 +11,7 @@ const {
     getUsersAndAlbums
 } = require("./queries");
 
+
 const db = require("./db");
 
 const diffDays = (firstDate, secondDate) => {
@@ -52,6 +53,7 @@ const addAlbum = async msg => {
 
     await submitAlbum(author, album);
 };
+
 
 module.exports = {
     diffDays,
