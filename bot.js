@@ -6,7 +6,7 @@ const { controller } = require("./controller");
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-token = process.env.BOT_TOKEN;
+const token = process.env.BOT_TOKEN;
 
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`);
