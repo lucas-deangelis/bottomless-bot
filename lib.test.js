@@ -1,6 +1,9 @@
 "use strict";
 
+
 const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
+const { diffDays, getAlbum, addAlbum } = require("./lib");
+const { episodes } = require("./variables");
 
 
 test("difference between two equal dates is O", async done => {
@@ -74,7 +77,30 @@ test('getEpisodeURL works', done => {
 
     const res = getEpisodeURL(episode);
 
-    expect(res).toBe('https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/2');
+    expect(res).toBe('https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/2')
+
+    done();
+});
+
+
+test('episodeDate works', async done => {
+    const dateTest = new Date("2019-11-18");
+    const beginningTest = new Date("2019-10-01");
+    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+
+    expect(episodeTest).toBe('AXZ E2');
+
+    done();
+});
+
+test('episodeDate works', async done => {
+    const dateTest = new Date("2019-12-31");
+    const beginningTest = new Date("2019-10-01");
+    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+
+    expect(episodeTest).toBe('S1 E9');
 
     done();
 });
