@@ -22,6 +22,18 @@ const diffDays = (firstDate, secondDate) => {
     return roundDays;
 };
 
+const episodeDate = date => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+    const dateParsed = Date.parse(date);
+
+    const dateFormated = date.toLocaleDateString('en-US', options);
+
+    const nbEpisode = (diffDays(beginning, dateParsed) % episodes.length);
+    const episode = episodes[nbEpisode];
+    msg.reply(`the episode for ${dateFormated} is ${episode}`);
+};
+
 const getAlbum = people => {
     let readyPeople = [];
 
@@ -59,4 +71,5 @@ module.exports = {
     diffDays,
     getAlbum,
     addAlbum,
+    episodeDate
 };
