@@ -54,9 +54,16 @@ const addAlbum = async msg => {
     await submitAlbum(author, album);
 };
 
+const getEpisodeTitle = async msg => {
+        const id =
+            jikanjs.loadAnime(id, 'episodes').then((response) => {
+                    response.episodes.forEach(element => {
+                                if episode
+                            }
 
-module.exports = {
-    diffDays,
-    getAlbum,
-    addAlbum
-};
+
+                            module.exports = {
+                                diffDays,
+                                getAlbum,
+                                addAlbum
+                            };
