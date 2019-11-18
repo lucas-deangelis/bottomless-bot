@@ -3,13 +3,13 @@
 const { diffDays, getAlbum, addAlbum } = require("./lib");
 const {
     createUser,
+    clearUsers,
     incrementUserAlbumCount,
     createAlbumForUser,
     markAlbumAsPassed,
     getUsersAndAlbums
 } = require("./queries");
 
-const { clearUsers } = require("./testqueries");
 
 const db = require("./db");
 
