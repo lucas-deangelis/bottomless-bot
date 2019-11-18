@@ -55,15 +55,55 @@ const addAlbum = async msg => {
 };
 
 const getEpisodeTitle = async msg => {
-        const id =
-            jikanjs.loadAnime(id, 'episodes').then((response) => {
-                    response.episodes.forEach(element => {
-                                if episode
-                            }
+
+    const jikanjs = require('jikanjs');
+    const season = msg.content.split(':')[0];
+    const ep = msg.content.split(':')[1];
+
+    let id;
+    switch (season) {
+        case 'S1':
+            {
+                id = 11751;
+                break;
+            }
+        case 'G':
+            {
+                id = 15793;
+                break;
+            }
+        case 'GX':
+            {
+                id = 21573;
+                break;
+            }
+        case 'AXZ':
+            {
+                id = 32836;
+                break;
+            }
+        case 'XV':
+            {
+                id = 32843;
+                break;
+            }
+    }
+
+    jikanjs.loadAnime(id, 'episodes').then((response) => {
+        response.episodes.forEach(element => {
+            if (element.episode_id == ep) {
+                return msg.reply(element.title);
+            }
+        })
+    });
+}
 
 
-                            module.exports = {
-                                diffDays,
-                                getAlbum,
-                                addAlbum
-                            };
+
+
+
+module.exports = {
+    diffDays,
+    getAlbum,
+    addAlbum
+};
