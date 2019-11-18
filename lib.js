@@ -4,12 +4,13 @@ const { milliSecPerDay } = require("./variables");
 
 const {
     createUser,
-    clearUsers,
     incrementUserAlbumCount,
     createAlbumForUser,
     markAlbumAsPassed,
     getUsersAndAlbums
 } = require("./queries");
+
+const { clearUsers } = require("./testqueries");
 
 const db = require("./db");
 
@@ -53,8 +54,13 @@ const addAlbum = (msg) => {
     submitAlbum(author, album);
 };
 
+const getEpisodeDate = msg => {
+    let dateInput = Date.parse(msg.content)
+};
+
 module.exports = {
     diffDays,
     getAlbum,
     addAlbum,
+    getEpisodeDate
 };
