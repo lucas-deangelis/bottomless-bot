@@ -25,11 +25,11 @@ function controller(msg) {
     }
     
     if (msg.content.startsWith("&episodeDate")) {
-        const inputDate = msg.content.replace('&episodeDate ', '');
-        const dateParsed = Date.parse(inputDate);
-        const nbEpisode = (diffDays(beginning, dateParsed) % episodes.length);
-        const episode = episodes[nbEpisode + 1];
-        msg.reply(`The episode for ${inputDate} will be : ${episode}`);
+        const inputDate = new Date(msg.content.replace('&episodeDate ', ''));
+        const nbEpisode = (diffDays(beginning, inputDate) % episodes.length);
+        const episode = episodes[nbEpisode];
+        msg.reply(`the episode for ${inputDate} is ${episode}`);
+        
     }
 }
 
