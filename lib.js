@@ -54,48 +54,40 @@ const addAlbum = async msg => {
     await submitAlbum(author, album);
 };
 
-const getEpisodeTitle = async msg => {
+const getEpisodeURL = episode => {
+    const season = episode.split(' E')[0];
+    const ep = episode.split('E')[1];
 
-    const jikanjs = require('jikanjs');
-    const season = msg.content.split(':')[0];
-    const ep = msg.content.split(':')[1];
-
-    let id;
+    let url;
     switch (season) {
         case 'S1':
             {
-                id = 11751;
+                url = `https://myanimelist.net/anime/11751/Senki_Zesshou_Symphogear/episode/${ep}`;
                 break;
             }
         case 'G':
             {
-                id = 15793;
+                url = `https://myanimelist.net/anime/15793/Senki_Zesshou_Symphogear_G/episode/${ep}`;
                 break;
             }
         case 'GX':
             {
-                id = 21573;
+                url = `https://myanimelist.net/anime/21573/Senki_Zesshou_Symphogear_GX/episode/${ep}`;
                 break;
             }
         case 'AXZ':
             {
-                id = 32836;
+                url = `https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/${ep}`;
                 break;
             }
         case 'XV':
             {
-                id = 32843;
+                url = `https://myanimelist.net/anime/32843/Senki_Zesshou_Symphogear_XV/episode/${ep}`;
                 break;
             }
     }
 
-    jikanjs.loadAnime(id, 'episodes').then((response) => {
-        response.episodes.forEach(element => {
-            if (element.episode_id == ep) {
-                return msg.reply(element.title);
-            }
-        })
-    });
+    return url;
 }
 
 
@@ -105,5 +97,6 @@ const getEpisodeTitle = async msg => {
 module.exports = {
     diffDays,
     getAlbum,
-    addAlbum
+    addAlbum,
+    getEpisodeURL
 };

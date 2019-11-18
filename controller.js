@@ -1,18 +1,23 @@
 "use strict";
-
 const { episodes, beginning } = require("./variables");
-const { diffDays, submitAlbum } = require("./lib");
+const { diffDays, addAlbum, getEpisodeURL } = require("./lib");
 
 function controller(msg) {
     if (msg.content.startsWith("&episodeToday")) {
         const nbEpisode = diffDays(beginning, Date.now());
         const episode = episodes[nbEpisode];
-        msg.reply(episode);
+        const url = getEpisodeURL(episode);
+        msg.reply(`Today's episode is ${episode}: 
+        
+         ${url}`)
     }
     if (msg.content.startsWith("&episodeTomorrow")) {
         const nbEpisode = diffDays(beginning, Date.now());
         const episode = episodes[nbEpisode + 1];
-        msg.reply(episode);
+        const url = getEpisodeURL(episode);
+        msg.reply(`Today's episode is ${episode}: 
+        
+        ${url}`)
     }
     if (msg.content.startsWith("&listCommands")) {
         msg.reply(
@@ -23,13 +28,16 @@ function controller(msg) {
         addAlbum(msg);
         msg.reply(`${album} has been added to your queue.`);
     }
-    
+
     if (msg.content.startsWith("&episodeDate")) {
         const inputDate = msg.content.replace('&episodeDate ', '');
         const dateParsed = Date.parse(inputDate);
         const nbEpisode = (diffDays(beginning, dateParsed) % episodes.length);
         const episode = episodes[nbEpisode + 1];
-        msg.reply(`The episode for ${inputDate} will be : ${episode}`);
+        const url = getEpisodeURL(episode);
+        msg.reply(`The episode for ${inputDate} will be : ${episode}:
+        
+        ${url}`);
     }
 }
 
