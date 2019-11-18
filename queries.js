@@ -61,10 +61,6 @@ async function clearUsers() {
     }
 }
 
-module.exports = {
-    clearUsers
-}
-
 /**
  *
  * @param {string} name - The name of the user which will have his album number count incremented
