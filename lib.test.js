@@ -1,9 +1,9 @@
 "use strict";
 
 const { diffDays, getAlbum, addAlbum } = require("./lib");
-const { episodes } = require("./variables")
+const { episodes, beginning, milliSecPerDay } = require("./variables")
 
-
+/*
 test("difference between two equal dates is O", async done => {
     const now = Date.now();
     expect(diffDays(now, now)).toBe(0);
@@ -67,13 +67,30 @@ test('submitAlbum works', async done => {
     expect(res[0].albums).toContain('Toto - Africa');
 
     done();
-});
+});*/
+
+const episodeDate = date => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const dateTest = new Date(date);
+    //const dateParsed = Date.parse(dateTest);
+    const nbEpisodeTest = (diffDays(beginning, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+    console.log(`The episode for ${dateTest.toLocaleDateString('en-US', options)} is ${episodeTest}`);
+    return episodeTest;
+}
+
 
 test('episodeDate works', async done => {
-    const dateTest = new Date("2019-11-18");
-    const beginningTest = new Date("2019-10-01");
-    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
-    const episodeTest = episodes[nbEpisodeTest];
+    const episodeTest = episodeDate("November 18, 2019");
+
+    expect(episodeTest).toBe('AXZ E2');
+
+    done();
+});
+
+test('episodeToday works', async done => {
+    //const dateTest = new Date("2019-11-18");
+    const episodeTest = episodeDate(Date.now());
 
     expect(episodeTest).toBe('AXZ E2');
 
@@ -81,10 +98,7 @@ test('episodeDate works', async done => {
 });
 
 test('episodeDate works', async done => {
-    const dateTest = new Date("2019-12-31");
-    const beginningTest = new Date("2019-10-01");
-    const nbEpisodeTest = (diffDays(beginningTest, dateTest) % episodes.length);
-    const episodeTest = episodes[nbEpisodeTest];
+    const episodeTest = episodeDate("2019-12-31");
 
     expect(episodeTest).toBe('S1 E9');
 
