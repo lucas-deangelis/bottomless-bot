@@ -1,24 +1,7 @@
 "use strict";
 
-const { diffDays, getAlbum, addAlbum } = require("./lib");
-const {
-    createUser,
-    clearUsers,
-    incrementUserAlbumCount,
-    createAlbumForUser,
-    markAlbumAsPassed,
-    getUsersAndAlbums
-} = require("./queries");
-
-const db = require("./db");
-
-beforeEach(async() => {
-    await clearUsers();
-});
-
-afterAll(async() => {
-    await db.close();
-});
+const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
+const { episodes, beginning, milliSecPerDay } = require("./variables")
 
 test("difference between two equal dates is O", async done => {
     const now = Date.now();
@@ -67,83 +50,104 @@ test("getAlbum send all the albums", async done => {
     done();
 });
 
-test("createUser creates a user", async done => {
-    const res = await createUser("toto");
-    expect(res[0].name).toBe("toto");
-    expect(res[0].countalbum).toBe(0);
 
-    done();
-});
+test('submitAlbum works', async done => {
 
-test("incrementUserAlbumCount works", async done => {
-    const res = await createUser("toto");
-
-    const res2 = await incrementUserAlbumCount("toto");
-
-    expect(res2).toBeDefined;
-    expect(res2[0].countalbum).toBe(1);
-
-    done();
-});
-
-test("createAlbumForUser works", async done => {
-    const resUser = await createUser("toto");
-    const res = await createAlbumForUser("albumToto", "toto");
-
-    expect(res[0].name).toBe("albumToto");
-    expect(res[0].username).toBe("toto");
-
-    done();
-});
-
-test("markAlbumAsPassed works", async done => {
-    await createUser("toto");
-    await createAlbumForUser("albumToto", "toto");
-    const res = await markAlbumAsPassed("albumToto");
-
-    expect(res[0].passed).toBe(true);
-
-    done();
-});
-
-test("getUsersAndAlbums works", async done => {
-    await createUser("toto");
-    await createAlbumForUser("albumToto1", "toto");
-    await createAlbumForUser("albumToto2", "toto");
-
-    await createUser("tata");
-    await createAlbumForUser("albumTata1", "tata");
-    await createAlbumForUser("albumTata2", "tata");
-
-    await incrementUserAlbumCount("tata");
-
-    const res = await getUsersAndAlbums();
-
-    expect(res[0].name).toBe("toto");
-    expect(res[0].albums).toContain("albumToto2");
-    expect(res[0].albums).toContain("albumToto1");
-    expect(res[0].count).toBe(0);
-
-    expect(res[1].name).toBe("tata");
-    expect(res[1].albums).toContain("albumTata2");
-    expect(res[1].albums).toContain("albumTata1");
-    expect(res[1].count).toBe(1);
-
-    done();
-});
-
-test("submitAlbum works", async done => {
     const msg = {
-        content: "&submitAlbum Toto - Africa",
-        author: "Hiki"
+        content: '&submitAlbum Toto - Africa',
+        author: 'Hiki'
     };
 
     addAlbum(msg);
 
     const res = await getUsersAndAlbums();
 
-    expect(res[0].name).toBe("Hiki");
-    expect(res[0].albums).toContain("Toto - Africa");
+    expect(res[0].name).toBe('Hiki');
+    expect(res[0].albums).toContain('Toto - Africa');
 
+    done();
+});
+
+test('getEpisodeURL works', done => {
+
+    const episode = 'AXZ E2';
+    const unknownEpisode = 'Zesshoushinai 1';
+
+    const res = getEpisodeURL(episode);
+    const res2 = getEpisodeURL(unknownEpisode)
+
+    expect(res).toBe('https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/2')
+
+    expect(res2).toBe('');
+
+    done();
+});
+
+
+const episodeDate = (dateUS, dateFR, msg) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+    let dateTest = new Date(dateUS);
+    dateTest.setHours(0, 0, 0);
+
+    const nbEpisodeTest = (diffDays(beginning, dateTest) % episodes.length);
+    const episodeTest = episodes[nbEpisodeTest];
+
+    if (msg === 'eTd') {
+        return `Today's episode is ${episodeTest}`;
+    } else if (msg === 'eTmr') {
+        return `Tomorrow's episode is ${episodeTest}`;
+    } else {
+        return `The episode for ${dateFR} is ${episodeTest}`;
+    }
+}
+
+const converter = date => {
+    const splitDate = date.split('/');
+    return new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
+}
+
+test('episodeDate works', async done => {
+    const msg = 'eDate';
+    const frDate = '19/11/2019';
+
+    const episodeTest = episodeDate(converter(frDate), frDate, msg);
+
+    expect(episodeTest).toBe(`The episode for 19/11/2019 is AXZ E3`);
+    console.log(episodeTest);
+
+    done();
+});
+
+
+test('episodeToday works', async done => {
+    const msg = 'eTd';
+    const episodeTest = episodeDate(Date.now(), Date.now(), msg);
+
+    expect(episodeTest).toBe('Today\'s episode is AXZ E3');
+    console.log(episodeTest);
+
+    done();
+});
+
+test('episodeTomorrow works', async done => {
+    const msg = 'eTmr'
+    const episodeTest = episodeDate((Date.now() + milliSecPerDay), Date.now(), msg);
+
+
+    expect(episodeTest).toBe('Tomorrow\'s episode is AXZ E4');
+    console.log(episodeTest);
+
+    done();
+});
+
+test('episodeDate works', async done => {
+    const msg = 'eDate';
+    const frDate = '31/12/2019';
+
+    const episodeTest = episodeDate(converter(frDate), frDate, msg);
+
+    expect(episodeTest).toBe('The episode for 31/12/2019 is S1 E9');
+    console.log(episodeTest);
     done();
 });

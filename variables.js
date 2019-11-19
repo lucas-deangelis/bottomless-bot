@@ -92,7 +92,7 @@ const episodes = [
     "Concert XV"
 ];
 
-const beginning = new Date("October 1, 2019 15:17:00");
+const beginning = new Date("October 1, 2019");
 
 const milliSecPerDay = 86400000;
 
