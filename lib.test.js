@@ -94,7 +94,6 @@ const converter = date => {
 test('episodeDate works', async done => {
     const msg = 'eDate';
     const frDate = '19/11/2019';
-    const converted = converter(frDate);
 
     const episodeTest = episodeDate(converter(frDate), frDate, msg);
 
@@ -127,7 +126,7 @@ test('episodeTomorrow works', async done => {
 test('episodeDate works', async done => {
     const msg = 'eDate';
     const frDate = '31/12/2019';
-    const converted = converter(frDate);
+
     const episodeTest = episodeDate(converter(frDate), frDate, msg);
 
     expect(episodeTest).toBe('The episode for 31/12/2019 is S1 E9');
