@@ -1,6 +1,6 @@
 "use strict";
 
-const { milliSecPerDay } = require("./variables");
+const { episodes, beginning, milliSecPerDay } = require("./variables");
 
 const {
     createUser,
@@ -22,16 +22,26 @@ const diffDays = (firstDate, secondDate) => {
     return roundDays;
 };
 
-const episodeDate = date => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+const converter = date => {
+    const splitDate = date.split('/');
+    return new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
+};
 
-    const dateParsed = Date.parse(date);
+const episodeDate = (dateUS, dateFR, msg) => {
 
-    const dateFormated = date.toLocaleDateString('en-US', options);
+    let theDate = new Date(dateUS);
+    theDate.setHours(0, 0, 0);
 
-    const nbEpisode = (diffDays(beginning, dateParsed) % episodes.length);
+    const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
     const episode = episodes[nbEpisode];
-    msg.reply(`the episode for ${dateFormated} is ${episode}`);
+
+    if (msg === 'eTd') {
+        return `Today's episode is ${episode}`;
+    } else if (msg === 'eTmr') {
+        return `Tomorrow's episode is ${episode}`;
+    } else {
+        return `the episode for ${dateFR} is ${episode}`;
+    }
 };
 
 const getAlbum = people => {
@@ -71,5 +81,6 @@ module.exports = {
     diffDays,
     getAlbum,
     addAlbum,
-    episodeDate
+    episodeDate,
+    converter
 };
