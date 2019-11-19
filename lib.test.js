@@ -3,7 +3,6 @@
 const { diffDays, getAlbum, addAlbum } = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables")
 
-/*
 test("difference between two equal dates is O", async done => {
     const now = Date.now();
     expect(diffDays(now, now)).toBe(0);
@@ -67,40 +66,72 @@ test('submitAlbum works', async done => {
     expect(res[0].albums).toContain('Toto - Africa');
 
     done();
-});*/
+});
 
-const episodeDate = date => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const dateTest = new Date(date);
-    //const dateParsed = Date.parse(dateTest);
+const episodeDate = (dateUS, dateFR, msg) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+    let dateTest = new Date(dateUS);
+    dateTest.setHours(0, 0, 0);
+
     const nbEpisodeTest = (diffDays(beginning, dateTest) % episodes.length);
     const episodeTest = episodes[nbEpisodeTest];
-    console.log(`The episode for ${dateTest.toLocaleDateString('en-US', options)} is ${episodeTest}`);
-    return episodeTest;
+
+    if (msg === 'eTd') {
+        return `Today's episode is ${episodeTest}`;
+    } else if (msg === 'eTmr') {
+        return `Tomorrow's episode is ${episodeTest}`;
+    } else {
+        return `The episode for ${dateFR} is ${episodeTest}`;
+    }
 }
 
+const converter = date => {
+    const splitDate = date.split('/');
+    return new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
+}
 
 test('episodeDate works', async done => {
-    const episodeTest = episodeDate("November 18, 2019");
+    const msg = 'eDate';
+    const frDate = '19/11/2019';
+    const converted = converter(frDate);
 
-    expect(episodeTest).toBe('AXZ E2');
+    const episodeTest = episodeDate(converter(frDate), frDate, msg);
+
+    expect(episodeTest).toBe(`The episode for 19/11/2019 is AXZ E3`);
+    console.log(episodeTest);
 
     done();
 });
 
 test('episodeToday works', async done => {
-    //const dateTest = new Date("2019-11-18");
-    const episodeTest = episodeDate(Date.now());
+    const msg = 'eTd';
+    const episodeTest = episodeDate(Date.now(), Date.now(), msg);
 
-    expect(episodeTest).toBe('AXZ E2');
+    expect(episodeTest).toBe('Today\'s episode is AXZ E3');
+    console.log(episodeTest);
+
+    done();
+});
+
+test('episodeTomorrow works', async done => {
+    const msg = 'eTmr'
+    const episodeTest = episodeDate((Date.now() + milliSecPerDay), Date.now(), msg);
+
+    expect(episodeTest).toBe('Tomorrow\'s episode is AXZ E4');
+    console.log(episodeTest);
 
     done();
 });
 
 test('episodeDate works', async done => {
-    const episodeTest = episodeDate("2019-12-31");
+    const msg = 'eDate';
+    const frDate = '31/12/2019';
+    const converted = converter(frDate);
+    const episodeTest = episodeDate(converter(frDate), frDate, msg);
 
-    expect(episodeTest).toBe('S1 E9');
+    expect(episodeTest).toBe('The episode for 31/12/2019 is S1 E9');
+    console.log(episodeTest);
 
     done();
 });
