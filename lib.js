@@ -1,6 +1,6 @@
 "use strict";
 
-const { episodes, beginning, milliSecPerDay } = require("./variables");
+const {episodes, beginning, milliSecPerDay} = require("./variables");
 
 const {
     createUser,
@@ -23,38 +23,29 @@ const diffDays = (firstDate, secondDate) => {
 };
 
 const episodeDate = (msg) => {
-
     let theDate;
-    let inputCmd = msg.content.replace('&episode', '');
 
-    const getInputDate = (msg) => {
-        const inputDate = msg.content.replace('&episodeDate ', '');
-
-        return inputDate;
-    }
-    const inputDate = getInputDate(msg);
-
-
-    if (inputCmd === 'Today') {
+    if (msg === '') {
         theDate = new Date();
     }
-    if (inputCmd === 'Tomorrow') {
+    if (msg === 'tomorrow') {
         theDate = new Date();
         theDate.setDate(theDate.getDate() + 1);
+        msg.concat('\'s')
     }
-    if (inputCmd.includes('Date')) {
-
-        const dayMonthYear = inputDate.split('/');
+    if (msg.search(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/) !== -1) {
+        const dayMonthYear = msg.split('/');
 
         theDate = new Date(`${dayMonthYear[2]}-${dayMonthYear[1]}-${dayMonthYear[0]}`);
-
-        inputCmd = inputDate;
     }
 
-    const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
+    if (!theDate)
+        return undefined;
+
+    const nbEpisode = (diffDays(beginning, theDate.setHours(0, 0, 0)) % episodes.length);
     const episode = episodes[nbEpisode];
     const url = getEpisodeURL(episode);
-    return `${inputCmd.toLowerCase()} episode is ${episode}:\n\n${url}`;
+    return `${msg ? msg.toLowerCase() : 'today\'s'} episode is ${episode}:\n\n${url}`;
 };
 
 
@@ -72,7 +63,7 @@ const getAlbum = people => {
     return readyPeople[choice].album;
 };
 
-const submitAlbum = async(author, album) => {
+const submitAlbum = async (author, album) => {
     const users = await getUsersAndAlbums();
     const userDoesNotExist = users.every(el => el.username !== author);
 
@@ -114,8 +105,7 @@ const getEpisodeURL = episode => {
     }
 
     return url;
-}
-
+};
 
 
 

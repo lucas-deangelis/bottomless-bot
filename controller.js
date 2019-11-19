@@ -1,14 +1,17 @@
 "use strict";
 
-const { milliSecPerDay } = require("./variables");
+const { helpMessage } = require("./variables");
 const { episodeDate, converter, submitAlbum } = require("./lib");
 
 function controller(msg) {
-    if (msg.content.startsWith("&episode")) {
-        const reply = episodeDate(msg);
-        msg.reply(reply);
+    const command = msg.content.trim();
+    let reply;
+
+    if (command.startsWith("&episode")) {
+        reply = episodeDate(command.replace('&episode', '').trim());
+        (reply ? msg.reply(reply) : msg.reply(helpMessage));
     }
-    if (msg.content.startsWith("&addAlbum")) {
+    if (command.startsWith("&addAlbum")) {
         addAlbum(msg);
         msg.reply(`${album} has been added to your queue.`);
     }

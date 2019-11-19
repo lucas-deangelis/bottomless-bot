@@ -96,4 +96,7 @@ const beginning = new Date("October 1, 2019");
 
 const milliSecPerDay = 86400000;
 
-module.exports = { episodes, milliSecPerDay, beginning };
+const helpMessage = `\nCommands must be prefixed with "&"\n\n\`&episode {date}\`: this commands returns:\n- Today's episode if no date is provided\n- Tomorrow's episode if \`tomorrow\` is written in place of a date\n- Any date corresponding episode with \`date\` being in the format \`dd - mm - yyyy\`\n`;
+
+module.exports = { episodes, milliSecPerDay, beginning, helpMessage };
+
