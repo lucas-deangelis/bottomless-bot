@@ -72,7 +72,7 @@ const getAlbum = people => {
     return readyPeople[choice].album;
 };
 
-const submitAlbum = async(author, album) => {
+const submitAlbum = async (author, album) => {
     const users = await getUsersAndAlbums();
     const userDoesNotExist = users.every(el => el.username !== author);
 

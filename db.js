@@ -11,10 +11,10 @@ const pool = new Pool({
 });
 
 module.exports = {
-    query: async(text, params, callback) => {
+    query: async (text, params, callback) => {
         return await pool.query(text, params, callback);
     },
-    close: async() => {
+    close: async () => {
         await pool.end();
     }
 };
