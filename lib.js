@@ -22,27 +22,41 @@ const diffDays = (firstDate, secondDate) => {
     return roundDays;
 };
 
-const converter = date => {
-    const splitDate = date.split('/');
-    return new Date(`${splitDate[1]}/${splitDate[0]}/${splitDate[2]}`);
-};
+const episodeDate = (msg) => {
 
-const episodeDate = (dateUS, dateFR, msg) => {
+    let theDate;
+    let inputCmd = msg.content.replace('&episode', '');
 
-    let theDate = new Date(dateUS);
-    theDate.setHours(0, 0, 0);
+    const getInputDate = (msg) => {
+        const inputDate = msg.content.replace('&episodeDate ', '');
+
+        return inputDate;
+    }
+    const inputDate = getInputDate(msg);
+
+
+    if (inputCmd === 'Today') {
+        theDate = new Date();
+    }
+    if (inputCmd === 'Tomorrow') {
+        theDate = new Date();
+        theDate.setDate(theDate.getDate() + 1);
+    }
+    if (inputCmd.includes('Date')) {
+
+        const dayMonthYear = inputDate.split('/');
+
+        theDate = new Date(`${dayMonthYear[2]}-${dayMonthYear[1]}-${dayMonthYear[0]}`);
+
+        inputCmd = inputDate;
+    }
 
     const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
     const episode = episodes[nbEpisode];
-
-    if (msg === 'eTd') {
-        return `Today's episode is ${episode}`;
-    } else if (msg === 'eTmr') {
-        return `Tomorrow's episode is ${episode}`;
-    } else {
-        return `the episode for ${dateFR} is ${episode}`;
-    }
+    const url = getEpisodeURL(episode);
+    return `${inputCmd.toLowerCase()} episode is ${episode}:\n\n${url}`;
 };
+
 
 const getAlbum = people => {
     let readyPeople = [];
@@ -112,5 +126,4 @@ module.exports = {
     addAlbum,
     getEpisodeURL,
     episodeDate,
-    converter
 };
