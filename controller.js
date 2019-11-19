@@ -25,7 +25,7 @@ function controller(msg) {
     }
     if (msg.content.startsWith("&listCommands")) {
         msg.reply(
-            `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nlistCommands -> list of commands`
+            `\nCommands must be prefixed with "&"\nepisodeToday -> today's episode\nepisodeTomorrow -> tomorrow 's episode\nepisodeDate -> specified date's episode (format : dd/mm/yyyy)\nlistCommands -> list of commands`
         );
     }
     if (msg.content.startsWith("&addAlbum")) {
