@@ -71,10 +71,14 @@ test('submitAlbum works', async done => {
 test('getEpisodeURL works', done => {
 
     const episode = 'AXZ E2';
+    const unknownEpisode = 'Zesshoushinai 1';
 
     const res = getEpisodeURL(episode);
+    const res2 = getEpisodeURL(unknownEpisode)
 
     expect(res).toBe('https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/2')
+
+    expect(res2).toBe('');
 
     done();
 });

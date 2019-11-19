@@ -90,10 +90,9 @@ const getEpisodeURL = episode => {
     seasons.set('XV', '32843/Senki_Zesshou_Symphogear_XV');
 
     if (seasons.has(season)) {
-        seasons.forEach(el => {
-            if (el === seasons.get(season)) {
-                const id = el;
-                url = `https://myanimelist.net/anime/${id}/episode/${ep}`;
+        seasons.forEach(seasonHash => {
+            if (seasonHash === seasons.get(season)) {
+                url = `https://myanimelist.net/anime/${seasonHash}/episode/${ep}`;
             }
         });
     } else {
