@@ -1,7 +1,7 @@
 "use strict";
 
 const { milliSecPerDay } = require("./variables");
-const { episodeDate, rewatchProgress, submitAlbum } = require("./lib");
+const { episodeDate, rewatchProgress, addAlbum } = require("./lib");
 
 function controller(msg) {
     if (msg.content.startsWith("&episode")) {
