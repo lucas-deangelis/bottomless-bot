@@ -2,7 +2,6 @@
 
 
 const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
-const { diffDays, getAlbum, addAlbum } = require("./lib");
 const { episodes } = require("./variables");
 
 

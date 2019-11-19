@@ -69,8 +69,8 @@ const getEpisodeURL = episode => {
 
     if (seasons.has(season)) {
         seasons.forEach(el => {
-            if (el === season) {
-                const id = seasons.get(el);
+            if (el === seasons.get(season)) {
+                const id = el;
                 url = `https://myanimelist.net/anime/${id}/episode/${ep}`;
             }
         });
