@@ -132,19 +132,18 @@ test("getUsersAndAlbums works", async done => {
     done();
 });
 
-test('submitAlbum works', async done => {
-
+test("submitAlbum works", async done => {
     const msg = {
-        content: '&submitAlbum Toto - Africa',
-        author: 'Hiki'
+        content: "&submitAlbum Toto - Africa",
+        author: "Hiki"
     };
 
     addAlbum(msg);
 
     const res = await getUsersAndAlbums();
 
-    expect(res[0].name).toBe('Hiki');
-    expect(res[0].albums).toContain('Toto - Africa');
+    expect(res[0].name).toBe("Hiki");
+    expect(res[0].albums).toContain("Toto - Africa");
 
     done();
 });
