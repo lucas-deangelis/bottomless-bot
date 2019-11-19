@@ -1,6 +1,6 @@
 "use strict";
 
-const { diffDays, getAlbum, addAlbum } = require("./lib");
+const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables")
 
 test("difference between two equal dates is O", async done => {
@@ -67,6 +67,22 @@ test('submitAlbum works', async done => {
 
     done();
 });
+
+test('getEpisodeURL works', done => {
+
+    const episode = 'AXZ E2';
+    const unknownEpisode = 'Zesshoushinai 1';
+
+    const res = getEpisodeURL(episode);
+    const res2 = getEpisodeURL(unknownEpisode)
+
+    expect(res).toBe('https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/2')
+
+    expect(res2).toBe('');
+
+    done();
+});
+
 
 const episodeDate = (dateUS, dateFR, msg) => {
     const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
