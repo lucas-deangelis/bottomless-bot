@@ -58,22 +58,22 @@ const getAlbum = people => {
     return readyPeople[choice].album;
 };
 
-const submitAlbum = (author, album) => {
-    const users = getUsersAndAlbums();
+const submitAlbum = async(author, album) => {
+    const users = await getUsersAndAlbums();
     const userDoesNotExist = users.every(el => el.username !== author);
 
     if (userDoesNotExist) {
-        createUser(author);
-    };
+        await createUser(author);
+    }
 
-    createAlbumForUser(album, author);
+    await createAlbumForUser(album, author);
 };
 
-const addAlbum = (msg) => {
-    const album = msg.content.replace('&addAlbum ', '');
+const addAlbum = async msg => {
+    const album = msg.content.replace("&submitAlbum ", "");
     const author = msg.author;
 
-    submitAlbum(author, album);
+    await submitAlbum(author, album);
 };
 
 
