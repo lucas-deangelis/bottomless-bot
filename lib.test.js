@@ -1,6 +1,6 @@
 "use strict";
 
-const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
+const { diffDays, getAlbum, addAlbum, getEpisodeURL, rewatchProgress } = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables")
 
 test("difference between two equal dates is O", async done => {
@@ -150,3 +150,13 @@ test('episodeDate works', async done => {
 
     done();
 });
+
+test('rewatchProgress works', async done => {
+    const msg = '&rewatchProgress';
+
+    const res = rewatchProgress(msg);
+
+    expect(res).toBe('current rewatch progress: 60% *(EP 50/83)*.')
+
+    done();
+})
