@@ -59,32 +59,23 @@ const getEpisodeURL = episode => {
     const ep = episode.split('E')[1];
 
     let url;
-    switch (season) {
-        case 'S1':
-            {
-                url = `https://myanimelist.net/anime/11751/Senki_Zesshou_Symphogear/episode/${ep}`;
-                break;
+
+    const seasons = new Map();
+    seasons.set('S1', '11751/Senki_Zesshou_Symphogear');
+    seasons.set('G', '15793/Senki_Zesshou_Symphogear_G');
+    seasons.set('GX', '21573/Senki_Zesshou_Symphogear_GX');
+    seasons.set('AXZ', '32836/Senki_Zesshou_Symphogear_AXZ');
+    seasons.set('XV', '32843/Senki_Zesshou_Symphogear_XV');
+
+    if (seasons.has(season)) {
+        seasons.forEach(el => {
+            if (el === season) {
+                const id = seasons.get(el);
+                url = `https://myanimelist.net/anime/${id}/episode/${ep}`;
             }
-        case 'G':
-            {
-                url = `https://myanimelist.net/anime/15793/Senki_Zesshou_Symphogear_G/episode/${ep}`;
-                break;
-            }
-        case 'GX':
-            {
-                url = `https://myanimelist.net/anime/21573/Senki_Zesshou_Symphogear_GX/episode/${ep}`;
-                break;
-            }
-        case 'AXZ':
-            {
-                url = `https://myanimelist.net/anime/32836/Senki_Zesshou_Symphogear_AXZ/episode/${ep}`;
-                break;
-            }
-        case 'XV':
-            {
-                url = `https://myanimelist.net/anime/32843/Senki_Zesshou_Symphogear_XV/episode/${ep}`;
-                break;
-            }
+        });
+    } else {
+        url = '';
     }
 
     return url;
