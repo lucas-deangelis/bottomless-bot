@@ -7,7 +7,7 @@ function controller(msg) {
         const nbEpisode = diffDays(beginning, Date.now());
         const episode = episodes[nbEpisode];
         const url = getEpisodeURL(episode);
-        msg.reply(`Today's episode is ${episode}: 
+        msg.reply(`today's episode is ${episode}: 
         
          ${url}`)
     }
@@ -15,7 +15,7 @@ function controller(msg) {
         const nbEpisode = diffDays(beginning, Date.now());
         const episode = episodes[nbEpisode + 1];
         const url = getEpisodeURL(episode);
-        msg.reply(`Today's episode is ${episode}: 
+        msg.reply(`tomorrow's episode will be ${episode}: 
         
         ${url}`)
     }
@@ -33,6 +33,7 @@ function controller(msg) {
         const inputDate = new Date(msg.content.replace('&episodeDate ', ''));
         const nbEpisode = (diffDays(beginning, inputDate) % episodes.length);
         const episode = episodes[nbEpisode];
+        const url = getEpisodeURL(episode);
         msg.reply(`the episode for ${inputDate} is ${episode}
 
         ${url}`);
