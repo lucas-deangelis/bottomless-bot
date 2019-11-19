@@ -119,6 +119,7 @@ test('episodeDate works', async done => {
     done();
 });
 
+
 test('episodeToday works', async done => {
     const msg = 'eTd';
     const episodeTest = episodeDate(Date.now(), Date.now(), msg);
@@ -132,6 +133,7 @@ test('episodeToday works', async done => {
 test('episodeTomorrow works', async done => {
     const msg = 'eTmr'
     const episodeTest = episodeDate((Date.now() + milliSecPerDay), Date.now(), msg);
+
 
     expect(episodeTest).toBe('Tomorrow\'s episode is AXZ E4');
     console.log(episodeTest);
@@ -147,7 +149,6 @@ test('episodeDate works', async done => {
 
     expect(episodeTest).toBe('The episode for 31/12/2019 is S1 E9');
     console.log(episodeTest);
-
     done();
 });
 
