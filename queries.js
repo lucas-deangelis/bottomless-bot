@@ -1,5 +1,3 @@
-"use strict";
-
 const db = require("./db");
 /**
  * @return {array} an array of objects which represents users. These objects have a name property, which is the user name, and an albums property, which is an array of albums names.
@@ -10,10 +8,10 @@ async function getUsersAndAlbums() {
 
     try {
         const res = await db.query(text);
-        const rows = res.rows;
+        const { rows } = res.rows;
 
-        let users = [];
-        let usersDone = [];
+        const users = [];
+        const usersDone = [];
 
         for (let el of rows) {
             if (!usersDone.includes(el.username)) {
@@ -36,7 +34,7 @@ async function getUsersAndAlbums() {
 
         return users;
     } catch (err) {
-        console.log(err);
+        return console.err(err);
     }
 }
 /**
@@ -50,7 +48,7 @@ async function createUser(name) {
         const res = await db.query(text, [name]);
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.err(err);
     }
 }
 /**
@@ -61,7 +59,7 @@ async function clearUsers() {
     try {
         await db.query(text);
     } catch (err) {
-        console.log(err);
+        console.err(err);
     }
 }
 
@@ -85,7 +83,7 @@ async function incrementUserAlbumCount(name) {
 
         return res2.rows;
     } catch (err) {
-        console.log(err);
+        console.err(err);
     }
 }
 
@@ -103,7 +101,7 @@ async function createAlbumForUser(albumName, userName) {
 
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.err(err);
     }
 }
 
@@ -120,7 +118,7 @@ async function markAlbumAsPassed(albumName) {
 
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.err(err);
     }
 }
 

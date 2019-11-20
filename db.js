@@ -1,7 +1,7 @@
-"use strict";
-
 require("dotenv").config();
+
 const { Pool } = require("pg");
+
 const pool = new Pool({
     user: process.env.DBUSER,
     password: process.env.DBPASSWORD,
@@ -12,7 +12,7 @@ const pool = new Pool({
 
 module.exports = {
     query: async (text, params, callback) => {
-        return await pool.query(text, params, callback);
+        return pool.query(text, params, callback);
     },
     close: async () => {
         await pool.end();
