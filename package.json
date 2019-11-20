@@ -10,17 +10,6 @@
         "format": "prettier --write '*.js'",
         "lint": "eslint '*.js'"
     },
-    "lint-staged": {
-        "!( * test).js ": [
-            "prettier --write",
-            "eslint",
-            "git add"
-        ],
-        "*.js": [
-            "eslint --fix",
-            "git add"
-        ]
-    },
     "husky": {
         "hooks": {
             "pre-commit": "lint-staged",
