@@ -11,9 +11,13 @@
         "lint": "eslint '*.js'"
     },
     "lint-staged": {
-        "*.js": [
+        "!( * test).js ": [
             "prettier --write",
             "eslint",
+            "git add"
+        ],
+        "*.js": [
+            "eslint --fix",
             "git add"
         ]
     },
