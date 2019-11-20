@@ -9,17 +9,18 @@
         "test": "jest",
         "format": "prettier --write '*.js'",
         "lint": "eslint '*.js'",
-        "precommit": "lint-staged && npm run lint && npm run test"
+        "precommit": "lint-staged"
     },
     "lint-staged": {
         "*.js": [
-            "npm run format",
+            "prettier --write",
+            "eslint",
             "git add"
         ]
     },
     "husky": {
         "hooks": {
-            "pre-commit": "npm run precommit"
+            "pre-commit": "lint-staged"
         }
     },
     "dependencies": {
