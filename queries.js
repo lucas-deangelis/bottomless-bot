@@ -17,7 +17,11 @@ async function getUsersAndAlbums() {
 
         for (let el of rows) {
             if (!usersDone.includes(el.username)) {
-                users.push({ name: el.username, count: el.countalbum, albums: [] });
+                users.push({
+                    name: el.username,
+                    count: el.countalbum,
+                    albums: []
+                });
                 usersDone.push(el.username);
             }
         }
