@@ -5,6 +5,8 @@
 
 ## Using:
 
+You need to have PostgreSQL installed and running to run the tests correctly.
+
 You will need to provide these environment variables to make the bot run:
 
 -   For the PostgreSQL database:
