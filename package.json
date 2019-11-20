@@ -8,7 +8,8 @@
         "start": "node bot.js",
         "test": "jest",
         "format": "prettier --write '*.js'",
-        "lint": "eslint '*.js'"
+        "lint": "eslint '*.js'",
+        "precommit": "npm run format && npm run lint && npm run test"
     },
     "dependencies": {
         "discord.js": "^11.5.1",
@@ -24,7 +25,9 @@
         "eslint-plugin-prettier": "^3.1.1",
         "eslint-plugin-react": "^7.16.0",
         "eslint-plugin-react-hooks": "^1.7.0",
+        "husky": "^3.1.0",
         "jest": "^24.9.0",
+        "lint-staged": "^9.4.3",
         "prettier": "^1.19.1"
     }
 }
