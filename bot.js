@@ -13,6 +13,7 @@ let uselessVar;
 let variableNulle;
 let toto2;
 let toto3;
+let toto4;
 
 client.on("message", msg => controller(msg));
 

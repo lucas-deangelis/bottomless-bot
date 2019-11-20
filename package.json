@@ -16,6 +16,13 @@
             "pre-push": "npm test"
         }
     },
+    "lint-staged": {
+        "!( * test).js ": [
+            "prettier --write",
+            "git add",
+            "eslint --fix"
+        ]
+    },
     "dependencies": {
         "discord.js": "^11.5.1",
         "dotenv": "^8.2.0",
