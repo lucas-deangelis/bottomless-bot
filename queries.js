@@ -8,12 +8,11 @@ async function getUsersAndAlbums() {
 
     try {
         const res = await db.query(text);
-        const { rows } = res.rows;
 
         const users = [];
         const usersDone = [];
 
-        for (const el of rows) {
+        for (const el of res.rows) {
             if (!usersDone.includes(el.username)) {
                 users.push({
                     name: el.username,
@@ -24,7 +23,7 @@ async function getUsersAndAlbums() {
             }
         }
 
-        for (const el of rows) {
+        for (const el of res.rows) {
             for (const user of users) {
                 if (el.username === user.name) {
                     user.albums.push(el.name);

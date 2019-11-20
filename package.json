@@ -10,6 +10,19 @@
         "format": "prettier --write '*.js'",
         "lint": "eslint '*.js'"
     },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged",
+            "pre-push": "npm test"
+        }
+    },
+    "lint-staged": {
+        "*.js": [
+            "prettier --write",
+            "git add",
+            "eslint --fix"
+        ]
+    },
     "dependencies": {
         "discord.js": "^11.5.1",
         "dotenv": "^8.2.0",
@@ -24,7 +37,9 @@
         "eslint-plugin-prettier": "^3.1.1",
         "eslint-plugin-react": "^7.16.0",
         "eslint-plugin-react-hooks": "^1.7.0",
+        "husky": "^3.1.0",
         "jest": "^24.9.0",
+        "lint-staged": "^9.4.3",
         "prettier": "^1.19.1"
     }
 }
