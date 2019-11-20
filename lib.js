@@ -95,8 +95,8 @@ const submitAlbum = async (author, album) => {
 };
 
 const addAlbum = async msg => {
+    const author = msg.author;
     const album = msg.content.replace("&submitAlbum ", "");
-    const { author } = msg.author;
 
     await submitAlbum(author, album);
 };
