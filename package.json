@@ -9,7 +9,13 @@
         "test": "jest",
         "format": "prettier --write '*.js'",
         "lint": "eslint '*.js'",
-        "precommit": "npm run format && npm run lint && npm run test"
+        "precommit": "lint-staged && npm run lint && npm run test"
+    },
+    "lint-staged": {
+        "*.js": [
+            "npm run format",
+            "git add"
+        ]
     },
     "dependencies": {
         "discord.js": "^11.5.1",
