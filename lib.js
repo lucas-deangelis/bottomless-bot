@@ -22,6 +22,10 @@ const diffDays = (firstDate, secondDate) => {
     return roundDays;
 };
 
+const checkValidDate = (textDate) => {
+    return textDate.search(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/) !== -1
+};
+
 const episodeDate = (msg) => {
     let theDate;
 
@@ -33,7 +37,7 @@ const episodeDate = (msg) => {
         theDate.setDate(theDate.getDate() + 1);
         msg.concat('\'s')
     }
-    if (msg.search(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/) !== -1) {
+    if (checkValidDate(msg)) {
         const dayMonthYear = msg.split('/');
 
         theDate = new Date(`${dayMonthYear[2]}-${dayMonthYear[1]}-${dayMonthYear[0]}`);
@@ -45,7 +49,7 @@ const episodeDate = (msg) => {
     const nbEpisode = (diffDays(beginning, theDate.setHours(0, 0, 0)) % episodes.length);
     const episode = episodes[nbEpisode];
     const url = getEpisodeURL(episode);
-    return `${msg ? msg.toLowerCase() : 'today\'s'} episode is ${episode}:\n\n${url}`;
+    return `${msg ? msg : 'today\'s'} episode is ${episode}:\n\n${url}`;
 };
 
 

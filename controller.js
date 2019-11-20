@@ -5,10 +5,9 @@ const { episodeDate, converter, submitAlbum } = require("./lib");
 
 function controller(msg) {
     const command = msg.content.trim();
-    let reply;
 
     if (command.startsWith("&episode")) {
-        reply = episodeDate(command.replace('&episode', '').trim());
+        const reply = episodeDate(command.replace('&episode', '').trim());
         (reply ? msg.reply(reply) : msg.reply(helpMessage));
     }
     if (command.startsWith("&addAlbum")) {
