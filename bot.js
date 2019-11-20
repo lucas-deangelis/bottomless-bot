@@ -11,6 +11,7 @@ let toto;
 let tata;
 let uselessVar;
 let variableNulle;
+let toto2;
 
 client.on("message", msg => controller(msg));
 
