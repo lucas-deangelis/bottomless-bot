@@ -7,14 +7,13 @@ const {
     getUsersAndAlbums
 } = require("./queries");
 
-
 const db = require("./db");
 
-beforeEach(async() => {
+beforeEach(async () => {
     await clearUsers();
 });
 
-afterAll(async() => {
+afterAll(async () => {
     await db.close();
 });
 
