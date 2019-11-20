@@ -63,8 +63,8 @@ test("submitAlbum works", async done => {
 
     const res = await getUsersAndAlbums();
 
-    expect(res[0].name).toBe("Hiki");
-    expect(res[0].albums).toContain("Toto - Africa");
+    expect(res.some(el => el.name === "Hiki")).toBe(true);
+    expect(res.some(el => el.albums === "Toto - Africa")).toBe(true);
 
     done();
 });
