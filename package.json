@@ -8,8 +8,7 @@
         "start": "node bot.js",
         "test": "jest",
         "format": "prettier --write '*.js'",
-        "lint": "eslint '*.js'",
-        "precommit": "lint-staged"
+        "lint": "eslint '*.js'"
     },
     "lint-staged": {
         "*.js": [
@@ -20,7 +19,8 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "lint-staged"
+            "pre-commit": "lint-staged",
+            "pre-push": "npm test"
         }
     },
     "dependencies": {

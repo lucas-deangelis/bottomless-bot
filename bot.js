@@ -9,6 +9,7 @@ const token = process.env.BOT_TOKEN;
 
 let toto;
 let tata;
+let uselessVar;
 
 client.on("message", msg => controller(msg));
 
