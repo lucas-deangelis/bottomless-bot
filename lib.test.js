@@ -3,6 +3,7 @@
 const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables");
 const { createUser, getUsersAndAlbums, clearUsers } = require("./queries");
+const db = require("./db");
 
 test("difference between two equal dates is O", async done => {
     const now = Date.now();
@@ -54,17 +55,24 @@ test("getAlbum send all the albums", async done => {
 test("submitAlbum works", async done => {
     await clearUsers();
 
+    const album = "Toto - Africa";
+    const author = "Hiki";
+
     const msg = {
-        content: "&submitAlbum Toto - Africa",
-        author: "Hiki"
+        content: `&submitAlbum ${album}`,
+        author: author
     };
 
     await addAlbum(msg);
 
     const res = await getUsersAndAlbums();
 
-    expect(res.some(el => el.name === "Hiki")).toBe(true);
-    expect(res.some(el => el.albums === "Toto - Africa")).toBe(true);
+    const testedObject = res.filter(el => el.name === author)[0];
+
+    expect(testedObject.name).toBe(author);
+    expect(testedObject.albums).toContain("Toto - Africa");
+
+    await db.close();
 
     done();
 });
