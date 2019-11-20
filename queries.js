@@ -13,7 +13,7 @@ async function getUsersAndAlbums() {
         const users = [];
         const usersDone = [];
 
-        for (let el of rows) {
+        for (const el of rows) {
             if (!usersDone.includes(el.username)) {
                 users.push({
                     name: el.username,
@@ -24,9 +24,9 @@ async function getUsersAndAlbums() {
             }
         }
 
-        for (let el of rows) {
-            for (let user of users) {
-                if (el.username == user.name) {
+        for (const el of rows) {
+            for (const user of users) {
+                if (el.username === user.name) {
                     user.albums.push(el.name);
                 }
             }
@@ -34,7 +34,7 @@ async function getUsersAndAlbums() {
 
         return users;
     } catch (err) {
-        return console.err(err);
+        return err;
     }
 }
 /**
@@ -48,7 +48,7 @@ async function createUser(name) {
         const res = await db.query(text, [name]);
         return res.rows;
     } catch (err) {
-        console.err(err);
+        return err;
     }
 }
 /**
@@ -58,8 +58,10 @@ async function clearUsers() {
     const text = "TRUNCATE TABLE users CASCADE";
     try {
         await db.query(text);
+
+        return 0;
     } catch (err) {
-        console.err(err);
+        return err;
     }
 }
 
@@ -83,7 +85,7 @@ async function incrementUserAlbumCount(name) {
 
         return res2.rows;
     } catch (err) {
-        console.err(err);
+        return err;
     }
 }
 
@@ -101,7 +103,7 @@ async function createAlbumForUser(albumName, userName) {
 
         return res.rows;
     } catch (err) {
-        console.err(err);
+        return err;
     }
 }
 
@@ -118,7 +120,7 @@ async function markAlbumAsPassed(albumName) {
 
         return res.rows;
     } catch (err) {
-        console.err(err);
+        return err;
     }
 }
 
