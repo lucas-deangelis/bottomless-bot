@@ -1,7 +1,4 @@
-"use strict";
-
-const { milliSecPerDay } = require("./variables");
-const { episodeDate, converter, submitAlbum } = require("./lib");
+const { episodeDate } = require("./lib");
 
 function controller(msg) {
     if (msg.content.startsWith("&episode")) {
@@ -9,8 +6,7 @@ function controller(msg) {
         msg.reply(reply);
     }
     if (msg.content.startsWith("&addAlbum")) {
-        addAlbum(msg);
-        msg.reply(`${album} has been added to your queue.`);
+        msg.reply(` has been added to your queue.`);
     }
 }
 

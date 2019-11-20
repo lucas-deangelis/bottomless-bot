@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 Total is 83 :
 13 * 5 = 65 episodes

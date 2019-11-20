@@ -1,90 +1,23 @@
-"use strict";
-
 const { episodes, beginning, milliSecPerDay } = require("./variables");
 
 const {
     createUser,
-    clearUsers,
-    incrementUserAlbumCount,
     createAlbumForUser,
-    markAlbumAsPassed,
     getUsersAndAlbums
 } = require("./queries");
 
-const db = require("./db");
-
 const diffDays = (firstDate, secondDate) => {
-    let diff = firstDate - secondDate;
-    let days = diff / milliSecPerDay;
-    let absDays = Math.abs(days);
-    let roundDays = Math.round(absDays);
+    const diff = firstDate - secondDate;
+    const days = diff / milliSecPerDay;
+    const absDays = Math.abs(days);
+    const roundDays = Math.round(absDays);
     return roundDays;
 };
 
-const episodeDate = msg => {
-    let theDate;
-    let inputCmd = msg.content.replace("&episode", "");
+const getInputDate = msg => {
+    const inputDate = msg.content.replace("&episodeDate ", "");
 
-    const getInputDate = msg => {
-        const inputDate = msg.content.replace("&episodeDate ", "");
-
-        return inputDate;
-    };
-    const inputDate = getInputDate(msg);
-
-    if (inputCmd === "Today") {
-        theDate = new Date();
-    }
-    if (inputCmd === "Tomorrow") {
-        theDate = new Date();
-        theDate.setDate(theDate.getDate() + 1);
-    }
-    if (inputCmd.includes("Date")) {
-        const dayMonthYear = inputDate.split("/");
-
-        theDate = new Date(
-            `${dayMonthYear[2]}-${dayMonthYear[1]}-${dayMonthYear[0]}`
-        );
-
-        inputCmd = inputDate;
-    }
-
-    const nbEpisode = diffDays(beginning, theDate) % episodes.length;
-    const episode = episodes[nbEpisode];
-    const url = getEpisodeURL(episode);
-    return `${inputCmd.toLowerCase()} episode is ${episode}:\n\n${url}`;
-};
-
-const getAlbum = people => {
-    let readyPeople = [];
-
-    for (let el of people) {
-        if (el.ready) {
-            readyPeople.push(el);
-        }
-    }
-
-    const choice = Math.floor(Math.random() * readyPeople.length);
-    readyPeople[choice].ready = false;
-    return readyPeople[choice].album;
-};
-
-const submitAlbum = async (author, album) => {
-    const users = await getUsersAndAlbums();
-    const userDoesNotExist = users.every(el => el.username !== author);
-
-    if (userDoesNotExist) {
-        await createUser(author);
-    }
-
-    await createAlbumForUser(album, author);
-};
-
-const addAlbum = async msg => {
-    const album = msg.content.replace("&submitAlbum ", "");
-    const author = msg.author;
-
-    await submitAlbum(author, album);
+    return inputDate;
 };
 
 const getEpisodeURL = episode => {
@@ -111,6 +44,61 @@ const getEpisodeURL = episode => {
     }
 
     return url;
+};
+
+const episodeDate = msg => {
+    let theDate;
+    let inputCmd = msg.content.replace("&episode", "");
+
+    const inputDate = getInputDate(msg);
+
+    if (inputCmd === "Today") {
+        theDate = new Date();
+    }
+    if (inputCmd === "Tomorrow") {
+        theDate = new Date();
+        theDate.setDate(theDate.getDate() + 1);
+    }
+    if (inputCmd.includes("Date")) {
+        const dayMonthYear = inputDate.split("/");
+
+        theDate = new Date(
+            `${dayMonthYear[2]}-${dayMonthYear[1]}-${dayMonthYear[0]}`
+        );
+
+        inputCmd = inputDate;
+    }
+
+    const nbEpisode = diffDays(beginning, theDate) % episodes.length;
+    const episode = episodes[nbEpisode];
+    const url = getEpisodeURL(episode);
+    return `${inputCmd.toLowerCase()} episode is ${episode}:\n\n${url}`;
+};
+
+const getAlbum = people => {
+    const readyPeople = people.filter(el => el.ready);
+
+    const choice = Math.floor(Math.random() * readyPeople.length);
+    readyPeople[choice].ready = false;
+    return readyPeople[choice].album;
+};
+
+const submitAlbum = async (author, album) => {
+    const users = await getUsersAndAlbums();
+    const userDoesNotExist = users.every(el => el.username !== author);
+
+    if (userDoesNotExist) {
+        await createUser(author);
+    }
+
+    await createAlbumForUser(album, author);
+};
+
+const addAlbum = async msg => {
+    const album = msg.content.replace("&submitAlbum ", "");
+    const { author } = msg.author;
+
+    await submitAlbum(author, album);
 };
 
 module.exports = {
