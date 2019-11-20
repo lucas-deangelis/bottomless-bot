@@ -34,7 +34,7 @@ async function getUsersAndAlbums() {
 
         return users;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 /**
@@ -48,7 +48,7 @@ async function createUser(name) {
         const res = await db.query(text, [name]);
         return res.rows;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 /**
@@ -61,7 +61,7 @@ async function clearUsers() {
 
         return 0;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 
@@ -85,7 +85,7 @@ async function incrementUserAlbumCount(name) {
 
         return res2.rows;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 
@@ -103,7 +103,7 @@ async function createAlbumForUser(albumName, userName) {
 
         return res.rows;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 
@@ -120,7 +120,7 @@ async function markAlbumAsPassed(albumName) {
 
         return res.rows;
     } catch (err) {
-        return err;
+        console.error(err);
     }
 }
 
