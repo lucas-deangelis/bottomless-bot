@@ -1,4 +1,4 @@
-const { episodes, beginning, milliSecPerDay } = require("./variables");
+const { episodes, beginning, milliSecPerDay, seasons } = require("./variables");
 
 const {
     createUser,
@@ -21,17 +21,9 @@ const getInputDate = msg => {
 };
 
 const getEpisodeURL = episode => {
-    const season = episode.split(" E")[0];
-    const ep = episode.split("E")[1];
+    const [season, ep] = episode.split(" E");
 
     let url;
-
-    const seasons = new Map();
-    seasons.set("S1", "11751/Senki_Zesshou_Symphogear");
-    seasons.set("G", "15793/Senki_Zesshou_Symphogear_G");
-    seasons.set("GX", "21573/Senki_Zesshou_Symphogear_GX");
-    seasons.set("AXZ", "32836/Senki_Zesshou_Symphogear_AXZ");
-    seasons.set("XV", "32843/Senki_Zesshou_Symphogear_XV");
 
     if (seasons.has(season)) {
         seasons.forEach(seasonHash => {
