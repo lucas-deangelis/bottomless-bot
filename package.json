@@ -5,6 +5,7 @@
     "main": "bot.js",
     "author": "Lucas De Angelis <deangelis.lucas@outlook.com>",
     "repository": "https://github.com/lucas-deangelis/discord-symphogear",
+    "license": "MIT",
     "scripts": {
         "start": "node bot.js",
         "test": "jest",
