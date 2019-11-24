@@ -37,11 +37,10 @@ test("incrementUserAlbumCount works", async done => {
 });
 
 test("createAlbumForUser works", async done => {
-    const resUser = await createUser("toto");
+    await createUser("toto");
     const res = await createAlbumForUser("albumToto", "toto");
 
     expect(res[0].name).toBe("albumToto");
-    expect(res[0].username).toBe("toto");
 
     done();
 });
@@ -70,13 +69,19 @@ test("getUsersAndAlbums works", async done => {
     const res = await getUsersAndAlbums();
 
     expect(res[0].name).toBe("toto");
-    expect(res[0].albums).toContain("albumToto2");
-    expect(res[0].albums).toContain("albumToto1");
+
+    const albumsNameToto = [res[0].albums[0].name, res[0].albums[1].name];
+    expect(albumsNameToto).toContain("albumToto2");
+    expect(albumsNameToto).toContain("albumToto1");
+
     expect(res[0].count).toBe(0);
 
     expect(res[1].name).toBe("tata");
-    expect(res[1].albums).toContain("albumTata2");
-    expect(res[1].albums).toContain("albumTata1");
+
+    const albumsNameTata = [res[1].albums[0].name, res[1].albums[1].name];
+    expect(albumsNameTata).toContain("albumTata2");
+    expect(albumsNameTata).toContain("albumTata1");
+
     expect(res[1].count).toBe(1);
 
     done();

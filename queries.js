@@ -1,37 +1,47 @@
 const db = require("./db");
+
+function userIndex(users, userName) {
+    let index = 0;
+
+    for (let user of users) {
+        if (user.name === userName) {
+            return index;
+        }
+        ++index;
+    }
+
+    return -1;
+}
+
 /**
  * @return {array} an array of objects which represents users. These objects have a name property, which is the user name, and an albums property, which is an array of albums names.
  */
 async function getUsersAndAlbums() {
     const text =
-        "SELECT * FROM users as u FULL OUTER JOIN albums as a ON u.name = a.userName";
+        'SELECT users.name as "username", albums.name as "albumname", users.countAlbum as "countAlbum", albums.passed FROM users FULL OUTER JOIN albums ON users.id = albums.userId';
 
     try {
         const res = await db.query(text);
 
-        const users = [];
-        const usersDone = [];
+        let usersAndAlbums = [];
 
-        for (const el of res.rows) {
-            if (!usersDone.includes(el.username)) {
-                users.push({
-                    name: el.username,
-                    count: el.countalbum,
-                    albums: []
+        for (let row of res.rows) {
+            const indexUser = userIndex(usersAndAlbums, row.username);
+            if (indexUser != -1) {
+                usersAndAlbums[indexUser].albums.push({
+                    name: row.albumname,
+                    passed: row.passed
                 });
-                usersDone.push(el.username);
+            } else {
+                usersAndAlbums.push({
+                    name: row.username,
+                    count: row.countAlbum,
+                    albums: [{ name: row.albumname, passed: row.passed }]
+                });
             }
         }
 
-        for (const el of res.rows) {
-            for (const user of users) {
-                if (el.username === user.name) {
-                    user.albums.push(el.name);
-                }
-            }
-        }
-
-        return users;
+        return usersAndAlbums;
     } catch (err) {
         console.error(err);
     }
@@ -94,11 +104,14 @@ async function incrementUserAlbumCount(name) {
  * @param {string} userName
  */
 async function createAlbumForUser(albumName, userName) {
+    const getUserId = "SELECT id FROM users WHERE name = $1";
     const createAlbum =
-        "INSERT INTO albums (name, userName, passed) VALUES ($1, $2, false) RETURNING *";
+        "INSERT INTO albums (name, userId, passed) VALUES ($1, $2, false) RETURNING *";
 
     try {
-        const res = await db.query(createAlbum, [albumName, userName]);
+        const res1 = await db.query(getUserId, [userName]);
+        userId = res1.rows[0].id;
+        const res = await db.query(createAlbum, [albumName, userId]);
 
         return res.rows;
     } catch (err) {
