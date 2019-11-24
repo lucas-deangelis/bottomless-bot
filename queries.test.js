@@ -4,7 +4,9 @@ const {
     incrementUserAlbumCount,
     createAlbumForUser,
     markAlbumAsPassed,
-    getUsersAndAlbums
+    getUsersAndAlbums,
+    addAlbumToHistory,
+    getHistory
 } = require("./queries");
 
 const db = require("./db");
@@ -83,6 +85,25 @@ test("getUsersAndAlbums works", async done => {
     expect(albumsNameTata).toContain("albumTata1");
 
     expect(res[1].count).toBe(1);
+
+    done();
+});
+
+test("history works", async done => {
+    const date = new Date();
+
+    await createUser("toto");
+    await createAlbumForUser("albumToto", "toto");
+    await addAlbumToHistory("albumToto", date);
+
+    const res = await getHistory();
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    const formattedDate = `${year}-${month}-${day}`;
+
+    expect(res[0].date).toBe(formattedDate);
 
     done();
 });

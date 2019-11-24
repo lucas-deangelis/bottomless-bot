@@ -24,5 +24,5 @@ CREATE TABLE albums (
 CREATE TABLE semaines (
     id SERIAL PRIMARY KEY,
     albumId integer references albums(id),
-    date date
+    date varchar(50)
 );
