@@ -1,6 +1,6 @@
 ### Owner
 
-- Lucas DE ANGELIS [github](https://github.com/l-deangelis)
+- Lucas DE ANGELIS [github](https://github.com/lucas-deangelis)
 
 ### Contributors
 

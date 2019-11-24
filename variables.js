@@ -1,5 +1,3 @@
-"use strict";
-
 /*
 Total is 83 :
 13 * 5 = 65 episodes
@@ -96,4 +94,12 @@ const beginning = new Date("October 1, 2019");
 
 const milliSecPerDay = 86400000;
 
-module.exports = { episodes, milliSecPerDay, beginning };
+const seasons = new Map([
+    ["S1", "11751/Senki_Zesshou_Symphogear"],
+    ["G", "15793/Senki_Zesshou_Symphogear_G"],
+    ["GX", "21573/Senki_Zesshou_Symphogear_GX"],
+    ["AXZ", "32836/Senki_Zesshou_Symphogear_AXZ"],
+    ["XV", "32843/Senki_Zesshou_Symphogear_XV"]
+]);
+
+module.exports = { episodes, milliSecPerDay, beginning, seasons };

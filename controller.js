@@ -13,8 +13,7 @@ function controller(msg) {
         msg.reply(reply);
     }
     if (msg.content.startsWith("&addAlbum")) {
-        await addAlbum(msg);
-        msg.reply(`${album} has been added to your queue.`);
+        msg.reply(` has been added to your queue.`);
     }
 }
 

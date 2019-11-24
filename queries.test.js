@@ -7,14 +7,13 @@ const {
     getUsersAndAlbums
 } = require("./queries");
 
-
 const db = require("./db");
 
-beforeEach(async() => {
+beforeEach(async () => {
     await clearUsers();
 });
 
-afterAll(async() => {
+afterAll(async () => {
     await db.close();
 });
 
@@ -27,12 +26,12 @@ test("createUser creates a user", async done => {
 });
 
 test("incrementUserAlbumCount works", async done => {
-    const res = await createUser("toto");
+    await createUser("toto");
 
-    const res2 = await incrementUserAlbumCount("toto");
+    const res = await incrementUserAlbumCount("toto");
 
-    expect(res2).toBeDefined;
-    expect(res2[0].countalbum).toBe(1);
+    expect(res).toBeDefined;
+    expect(res[0].countalbum).toBe(1);
 
     done();
 });

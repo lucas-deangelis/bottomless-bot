@@ -1,5 +1,3 @@
-"use strict";
-
 const db = require("./db");
 /**
  * @return {array} an array of objects which represents users. These objects have a name property, which is the user name, and an albums property, which is an array of albums names.
@@ -10,12 +8,11 @@ async function getUsersAndAlbums() {
 
     try {
         const res = await db.query(text);
-        const rows = res.rows;
 
-        let users = [];
-        let usersDone = [];
+        const users = [];
+        const usersDone = [];
 
-        for (let el of rows) {
+        for (const el of res.rows) {
             if (!usersDone.includes(el.username)) {
                 users.push({
                     name: el.username,
@@ -26,9 +23,9 @@ async function getUsersAndAlbums() {
             }
         }
 
-        for (let el of rows) {
-            for (let user of users) {
-                if (el.username == user.name) {
+        for (const el of res.rows) {
+            for (const user of users) {
+                if (el.username === user.name) {
                     user.albums.push(el.name);
                 }
             }
@@ -36,7 +33,7 @@ async function getUsersAndAlbums() {
 
         return users;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 /**
@@ -50,7 +47,7 @@ async function createUser(name) {
         const res = await db.query(text, [name]);
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 /**
@@ -60,8 +57,10 @@ async function clearUsers() {
     const text = "TRUNCATE TABLE users CASCADE";
     try {
         await db.query(text);
+
+        return 0;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 
@@ -85,7 +84,7 @@ async function incrementUserAlbumCount(name) {
 
         return res2.rows;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 
@@ -103,7 +102,7 @@ async function createAlbumForUser(albumName, userName) {
 
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 
@@ -120,7 +119,7 @@ async function markAlbumAsPassed(albumName) {
 
         return res.rows;
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 
