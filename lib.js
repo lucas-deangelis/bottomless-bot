@@ -64,7 +64,7 @@ const episodeDate = msg => {
     const nbEpisode = diffDays(beginning, theDate) % episodes.length;
     const episode = episodes[nbEpisode];
     const url = getEpisodeURL(episode);
-    return `${inputCmd.toLowerCase()} episode is ${episode}:\n\n${url}`;
+    return `${inputCmd.toLowerCase()}'s episode is ${episode}:\n\n> **${titles[nbEpisode]}**\n\n${url}`;
 };
 
 const rewatchProgress = (msg) => {
