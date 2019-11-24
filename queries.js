@@ -110,7 +110,7 @@ async function createAlbumForUser(albumName, userName) {
 
     try {
         const res1 = await db.query(getUserId, [userName]);
-        userId = res1.rows[0].id;
+        const userId = res1.rows[0].id;
         const res = await db.query(createAlbum, [albumName, userId]);
 
         return res.rows;
@@ -136,11 +136,50 @@ async function markAlbumAsPassed(albumName) {
     }
 }
 
+async function addAlbumToHistory(albumName, date) {
+    const idAlbum = "SELECT id FROM albums WHERE albums.name = $1";
+    const insertAlbum =
+        "INSERT INTO semaines (albumid, date) VALUES ($1, $2) RETURNING *";
+
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    const formattedDate = `${year}-${month}-${day}`;
+
+    try {
+        const queryIdAlbum = await db.query(idAlbum, [albumName]);
+
+        const id = queryIdAlbum.rows[0].id;
+
+        const query = await db.query(insertAlbum, [id, formattedDate]);
+
+        return query.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+async function getHistory() {
+    const history =
+        "SELECT albums.name, semaines.date FROM semaines INNER JOIN albums on semaines.albumid = albums.id";
+
+    try {
+        const query = await db.query(history);
+
+        return query.rows;
+    } catch (err) {
+        console.error(err);
+    }
+}
+
 module.exports = {
     createUser,
     clearUsers,
     incrementUserAlbumCount,
     createAlbumForUser,
     markAlbumAsPassed,
-    getUsersAndAlbums
+    getUsersAndAlbums,
+    addAlbumToHistory,
+    getHistory
 };
