@@ -70,8 +70,9 @@ test("submitAlbum works", async done => {
     const testedObject = res.filter(el => el.name === author)[0];
 
     expect(testedObject.name).toBe(author);
-    expect(testedObject.albums).toContain("Toto - Africa");
+    expect(testedObject.albums[0].name).toBe("Toto - Africa");
 
+    await clearUsers();
     await db.close();
 
     done();
