@@ -87,11 +87,17 @@ const getAlbum = people => {
     return readyPeople[choice].album;
 };
 
+const userExists = (usersAndAlbums, author) => {
+    if (usersAndAlbums.length < 1) {
+        return false;
+    }
+    return usersAndAlbums.reduce((el, acc) => acc || el.username === author);
+};
+
 const submitAlbum = async (author, album) => {
     const users = await getUsersAndAlbums();
-    const userDoesNotExist = users.every(el => el.username !== author);
 
-    if (userDoesNotExist) {
+    if (!userExists(users, author)) {
         await createUser(author);
     }
 
