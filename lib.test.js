@@ -1,6 +1,12 @@
 "use strict";
 
-const { diffDays, getAlbum, addAlbum, getEpisodeURL } = require("./lib");
+const {
+    diffDays,
+    getAlbum,
+    addAlbum,
+    getEpisodeURL,
+    rewatchProgress
+} = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables");
 const { createUser, getUsersAndAlbums, clearUsers } = require("./queries");
 const db = require("./db");
@@ -157,6 +163,16 @@ test("episodeDate works", async done => {
     const episodeTest = episodeDate(converter(frDate), frDate, msg);
 
     expect(episodeTest).toBe("The episode for 31/12/2019 is S1 E9");
+
+    done();
+});
+
+test("rewatchProgress works", async done => {
+    const msg = "&rewatchProgress";
+
+    const res = rewatchProgress(msg);
+
+    expect(res).stringContaining("current rewatch progress:");
 
     done();
 });
