@@ -1,6 +1,12 @@
 "use strict";
 
-const { diffDays, getAlbum, addAlbum, getEpisodeURL, rewatchProgress } = require("./lib");
+const {
+    diffDays,
+    getAlbum,
+    addAlbum,
+    getEpisodeURL,
+    rewatchProgress
+} = require("./lib");
 const { episodes, beginning, milliSecPerDay } = require("./variables");
 const { createUser, getUsersAndAlbums, clearUsers } = require("./queries");
 const db = require("./db");
@@ -161,14 +167,12 @@ test("episodeDate works", async done => {
     done();
 });
 
-test('rewatchProgress works', async done => {
-    const msg = '&rewatchProgress';
+test("rewatchProgress works", async done => {
+    const msg = "&rewatchProgress";
 
     const res = rewatchProgress(msg);
 
-    expect(res).toBeDefined()
-
-    console.log(res)
+    expect(res).stringContaining("current rewatch progress:");
 
     done();
-})
+});
