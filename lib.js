@@ -1,4 +1,4 @@
-const { episodes, beginning, milliSecPerDay, seasons } = require("./variables");
+const { episodes, beginning, milliSecPerDay, seasons, titles } = require("./variables");
 
 const {
     createUser,
