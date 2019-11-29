@@ -185,4 +185,4 @@ const seasons = new Map([
     ["XV", "32843/Senki_Zesshou_Symphogear_XV"]
 ]);
 
-module.exports = { episodes, milliSecPerDay, beginning, seasons, exports };
+module.exports = { episodes, milliSecPerDay, beginning, seasons, exports, titles };

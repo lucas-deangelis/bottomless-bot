@@ -46,10 +46,12 @@ const episodeDate = msg => {
 
     if (inputCmd === "Today") {
         theDate = new Date();
+        theDate.setHours(0, 0, 0);
     }
     if (inputCmd === "Tomorrow") {
         theDate = new Date();
         theDate.setDate(theDate.getDate() + 1);
+        theDate.setHours(0, 0, 0);
     }
     if (inputCmd.includes("Date")) {
         const dayMonthYear = inputDate.split("/");
