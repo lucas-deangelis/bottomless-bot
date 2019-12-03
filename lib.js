@@ -1,4 +1,4 @@
-const { episodes, beginning, milliSecPerDay, seasons, titles } = require("./variables");
+const { episodes, beginning, milliSecPerDay, seasons, titles, dateToday, dateTmr } = require("./variables");
 
 const {
     createUser,
@@ -45,13 +45,10 @@ const episodeDate = msg => {
     const inputDate = getInputDate(msg);
 
     if (inputCmd === "Today") {
-        theDate = new Date();
-        theDate.setHours(0, 0, 0);
+        theDate = dateToday;
     }
     if (inputCmd === "Tomorrow") {
-        theDate = new Date();
-        theDate.setDate(theDate.getDate() + 1);
-        theDate.setHours(0, 0, 0);
+        theDate = dateTmr;
     }
     if (inputCmd.includes("Date")) {
         const dayMonthYear = inputDate.split("/");
@@ -69,9 +66,9 @@ const episodeDate = msg => {
     return `${inputCmd.toLowerCase()}'s episode is ${episode}:\n\n> **${titles[nbEpisode]}**\n\n${url}`;
 };
 
-const rewatchProgress = (msg) => {
+const rewatchProgress = () => {
 
-    const theDate = new Date();
+    const theDate = dateToday;
     const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
 
     const progress = Math.round((nbEpisode / episodes.length) * 100);
