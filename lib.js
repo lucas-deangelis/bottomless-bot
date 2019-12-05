@@ -1,4 +1,4 @@
-const { episodes, beginning, milliSecPerDay, seasons, titles, dateToday, dateTmr } = require("./variables");
+const { episodes, beginning, milliSecPerDay, seasons, titles } = require("./variables");
 
 const {
     createUser,
@@ -45,10 +45,13 @@ const episodeDate = msg => {
     const inputDate = getInputDate(msg);
 
     if (inputCmd === "Today") {
-        theDate = dateToday;
+        theDate = new Date();
+        dateToday.setHours(0, 0, 0);
     }
     if (inputCmd === "Tomorrow") {
-        theDate = dateTmr;
+        theDate = new Date();
+        dateTmr.setDate(dateTmr.getDate() + 1);
+        dateTmr.setHours(0, 0, 0);
     }
     if (inputCmd.includes("Date")) {
         const dayMonthYear = inputDate.split("/");

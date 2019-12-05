@@ -175,13 +175,6 @@ const titles = [
 
 const beginning = new Date("October 1, 2019");
 
-const dateToday = new Date();
-dateToday.setHours(0, 0, 0);
-
-const dateTmr = new Date();
-dateTmr.setDate(dateTmr.getDate() + 1);
-dateTmr.setHours(0, 0, 0);
-
 const milliSecPerDay = 86400000;
 
 const seasons = new Map([
@@ -192,4 +185,4 @@ const seasons = new Map([
     ["XV", "32843/Senki_Zesshou_Symphogear_XV"]
 ]);
 
-module.exports = { episodes, milliSecPerDay, beginning, seasons, exports, titles, dateToday, dateTmr };
+module.exports = { episodes, milliSecPerDay, beginning, seasons, exports, titles };
