@@ -58,7 +58,7 @@ test("getAlbum send all the albums", async done => {
     done();
 });
 
-xtest("submitAlbum works", async done => {
+test("submitAlbum works", async done => {
     await clearUsers();
 
     const album = "Toto - Africa";
@@ -175,12 +175,12 @@ xtest("episodeTomorrow works", async done => {
     done();
 });
 
-xtest("rewatchProgress works", async done => {
+test("rewatchProgress works", async done => {
     const msg = "&rewatchProgress";
 
     const res = rewatchProgress(msg);
 
-    expect(res).stringContaining("current rewatch progress:");
+    expect.stringContaining("current rewatch progress:");
 
     done();
 });

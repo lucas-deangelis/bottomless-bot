@@ -46,12 +46,12 @@ const episodeDate = msg => {
 
     if (inputCmd === "Today") {
         theDate = new Date();
-        theDate.setHours(0, 0, 0);
+        dateToday.setHours(0, 0, 0);
     }
     if (inputCmd === "Tomorrow") {
         theDate = new Date();
-        theDate.setDate(theDate.getDate() + 1);
-        theDate.setHours(0, 0, 0);
+        dateTmr.setDate(dateTmr.getDate() + 1);
+        dateTmr.setHours(0, 0, 0);
     }
     if (inputCmd.includes("Date")) {
         const dayMonthYear = inputDate.split("/");
@@ -69,9 +69,9 @@ const episodeDate = msg => {
     return `${inputCmd.toLowerCase()}'s episode is ${episode}:\n\n> **${titles[nbEpisode]}**\n\n${url}`;
 };
 
-const rewatchProgress = (msg) => {
+const rewatchProgress = () => {
 
-    const theDate = new Date();
+    const theDate = dateToday;
     const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
 
     const progress = Math.round((nbEpisode / episodes.length) * 100);
