@@ -71,7 +71,8 @@ const episodeDate = msg => {
 
 const rewatchProgress = () => {
 
-    const theDate = dateToday;
+    const theDate = new Date();
+    theDate.setHours(0, 0, 0);
     const nbEpisode = (diffDays(beginning, theDate) % episodes.length);
 
     const progress = Math.round((nbEpisode / episodes.length) * 100);
